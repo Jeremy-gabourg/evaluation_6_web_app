@@ -10,22 +10,9 @@ class FieldPerson
     private int $statusId;
     private int $typeId;
     private int $countryId;
-    private int $missionId;
     private array $agentSpecialities;
 
-    /**
-     * @param int $id
-     * @param string $firstName
-     * @param string $lastName
-     * @param int $birthDate
-     * @param string $codeName
-     * @param int $statusId
-     * @param int $typeId
-     * @param int $countryId
-     * @param int $missionId
-     * @param array $agentSpecialities
-     */
-    public function __construct(int $id, string $firstName, string $lastName, int $birthDate, string $codeName, int $statusId, int $typeId, int $countryId, int $missionId, array $agentSpecialities)
+    public function __construct(int $id, string $firstName, string $lastName, int $birthDate, string $codeName, int $statusId, int $typeId, int $countryId, array $agentSpecialities)
     {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -35,7 +22,6 @@ class FieldPerson
         $this->statusId = $statusId;
         $this->typeId = $typeId;
         $this->countryId = $countryId;
-        $this->missionId = $missionId;
         $this->agentSpecialities = $agentSpecialities;
     }
 
@@ -119,24 +105,29 @@ class FieldPerson
         $this->countryId = $countryId;
     }
 
-    public function getMissionId(): int
-    {
-        return $this->missionId;
-    }
-
-    public function setMissionId(int $missionId): void
-    {
-        $this->missionId = $missionId;
-    }
-
     public function getAgentSpecialities(): array
     {
         return $this->agentSpecialities;
     }
 
-    public function setAgentSpecialities(array $agentSpecialities): void
+    public function addAgentSpeciality(Speciality $speciality): self
     {
-        $this->agentSpecialities = $agentSpecialities;
+        if (!$this->agentSpecialities->contains($speciality)) {
+            $this->agentSpecialities[] = $speciality;
+
+            $agentSpeciality = new AgentSpeciality();
+            $specialityId = $speciality->getId();
+            $agentSpecialityId = $this->getId().$specialityId;
+            $agentSpeciality->setId($agentSpecialityId);
+        }
+
+        return $this;
+    }
+
+    public function removeAgentSpeciality(Speciality $speciality): self
+    {
+        $this->agentSpecialities->removeElement($speciality);
+        return $this;
     }
 
 
