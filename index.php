@@ -1,3 +1,3 @@
 <?php
 
-include_once './html/front_template.html';
+include_once './assets/html/front_template.html';
