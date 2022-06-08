@@ -1,5 +1,7 @@
 <?php
 
+require_once AgentSpeciality::class;
+
 class FieldPerson
 {
     private int $id;

@@ -6,33 +6,25 @@ class Mission
     private string $title;
     private string $description;
     private string $codeName;
-    private int $stardDate;
+    private int $startDate;
     private int $endDate;
     private int $countryId;
     private int $typeId;
     private int $statusId;
-    private int $safeHouseId;
     private int $specialityId;
-    private string $targetId;
-    private string $contactId;
-    private string $agentId;
 
-    public function __construct(int $id, string $title, string $description, string $codeName, int $stardDate, int $endDate, int $countryId, int $typeId, int $statusId, int $safeHouseId, int $specialityId, string $targetId, string $contactId, string $agentId)
+    public function __construct(int $id, string $title, string $description, string $codeName, int $startDate, int $endDate, int $countryId, int $typeId, int $statusId, int $specialityId)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->codeName = $codeName;
-        $this->stardDate = $stardDate;
+        $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->countryId = $countryId;
         $this->typeId = $typeId;
         $this->statusId = $statusId;
-        $this->safeHouseId = $safeHouseId;
         $this->specialityId = $specialityId;
-        $this->targetId = $targetId;
-        $this->contactId = $contactId;
-        $this->agentId = $agentId;
     }
 
     public function getId(): int
@@ -75,14 +67,14 @@ class Mission
         $this->codeName = $codeName;
     }
 
-    public function getStardDate(): int
+    public function getStartDate(): int
     {
-        return $this->stardDate;
+        return $this->startDate;
     }
 
-    public function setStardDate(int $stardDate): void
+    public function setStartDate(int $startDate): void
     {
-        $this->stardDate = $stardDate;
+        $this->startDate = $startDate;
     }
 
     public function getEndDate(): int
@@ -125,16 +117,6 @@ class Mission
         $this->statusId = $statusId;
     }
 
-    public function getSafeHouseId(): int
-    {
-        return $this->safeHouseId;
-    }
-
-    public function setSafeHouseId(int $safeHouseId): void
-    {
-        $this->safeHouseId = $safeHouseId;
-    }
-
     public function getSpecialityId(): int
     {
         return $this->specialityId;
@@ -144,36 +126,5 @@ class Mission
     {
         $this->specialityId = $specialityId;
     }
-
-    public function getTargetId(): string
-    {
-        return $this->targetId;
-    }
-
-    public function setTargetId(string $targetId): void
-    {
-        $this->targetId = $targetId;
-    }
-
-    public function getContactId(): string
-    {
-        return $this->contactId;
-    }
-
-    public function setContactId(string $contactId): void
-    {
-        $this->contactId = $contactId;
-    }
-
-    public function getAgentId(): string
-    {
-        return $this->agentId;
-    }
-
-    public function setAgentId(string $agentId): void
-    {
-        $this->agentId = $agentId;
-    }
-
 
 }

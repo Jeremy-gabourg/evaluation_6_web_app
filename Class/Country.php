@@ -8,9 +8,8 @@ class Country
     private string $alpha3Code;
     private string $englishName;
     private string $frenchName;
-    private int $safeHouseId;
 
-    public function __construct(int $id, int $countryCode, string $alpha2Code, string $alpha3Code, string $englishName, string $frenchName, int $safeHouseId)
+    public function __construct(int $id, int $countryCode, string $alpha2Code, string $alpha3Code, string $englishName, string $frenchName)
     {
         $this->id = $id;
         $this->countryCode = $countryCode;
@@ -18,7 +17,6 @@ class Country
         $this->alpha3Code = $alpha3Code;
         $this->englishName = $englishName;
         $this->frenchName = $frenchName;
-        $this->safeHouseId = $safeHouseId;
     }
 
     public function getId(): int
@@ -80,16 +78,5 @@ class Country
     {
         $this->frenchName = $frenchName;
     }
-
-    public function getSafeHouseId(): int
-    {
-        return $this->safeHouseId;
-    }
-
-    public function setSafeHouseId(int $safeHouseId): void
-    {
-        $this->safeHouseId = $safeHouseId;
-    }
-
 
 }

@@ -14,9 +14,9 @@ class AgentSpeciality
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(string $agentId, int $specialityId): void
     {
-        $this->id = $id;
+        $this->id = $agentId.$specialityId;
     }
 
 

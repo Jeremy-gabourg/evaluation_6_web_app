@@ -17,16 +17,9 @@
             <span class="material-symbols-outlined">public</span>
             <span class="fw-bold">AIE : Agence Internationale d'Espionnage</span>
         </div>
-        <span class="p-2 fw-bold align-self-end">Connexion</span>
+        <span class="p-2 fw-bold align-self-end">
+            <a role="button" class="text-reset" href="#">
+                Connexion
+            </a>
+        </span>
     </header>
-    <main>
-        <h1 class="text-center">Liste des Missions</h1>
-        <?php
-            require_once '../php/mission_listing.php';
-        ?>
-    </main>
-    <footer>
-
-    </footer>
-</body>
-</html>
