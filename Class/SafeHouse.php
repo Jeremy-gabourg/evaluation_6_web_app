@@ -7,14 +7,16 @@ class SafeHouse
     private string $safeHouseType;
     private bool $isAvailable;
     private int $countryId;
+    private int $missionId;
 
-    public function __construct(int $id, string $address, string $safeHouseType, bool $isAvailable, int $countryId)
+    public function __construct(int $id, string $address, string $safeHouseType, bool $isAvailable, int $countryId, int $missionId)
     {
         $this->id = $id;
         $this->address = $address;
         $this->safeHouseType = $safeHouseType;
         $this->isAvailable = $isAvailable;
         $this->countryId = $countryId;
+        $this->missionId = $missionId;
     }
 
     public function getId(): int
@@ -65,6 +67,16 @@ class SafeHouse
     public function setCountryId(int $countryId): void
     {
         $this->countryId = $countryId;
+    }
+
+    public function getMissionId(): int
+    {
+        return $this->missionId;
+    }
+
+    public function setMissionId(int $missionId): void
+    {
+        $this->missionId = $missionId;
     }
 
 
