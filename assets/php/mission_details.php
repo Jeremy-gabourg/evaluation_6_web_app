@@ -15,7 +15,7 @@ require_once (__DIR__ . '/../templates/front_header.html');
         function dateToFrench($date, $format) :string
         {
             $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-            $french_days = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
+            $french_days = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
             $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
             $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
             return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date) ) ) );
@@ -41,11 +41,11 @@ require_once (__DIR__ . '/../templates/front_header.html');
 
                         echo '
                         <div class="container-fluid">
-                            <h3>Titre : '.$missionArray['title'].'</h3>
+                            <h3>Nom de la mission : '.$missionArray['title'].'</h3>
                             <div>
                                 <p class="mt-3">Nom de code : '.$missionArray['code_name'].'</p>
                                 <p>Pays d\'intervention : '.$countryName['french_name'].'</p>
-                                <p>Statut : '.$statusName['name'].'</p>
+                                <p>Statut de la mission : '.$statusName['name'].'</p>
                                 <p>Date de début : '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
                                 <p>Date de fin : '.dateToFrench($missionArray['end_date'], 'l d F o').'</p>
                                 <p>
