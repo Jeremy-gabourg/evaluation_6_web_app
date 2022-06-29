@@ -13,8 +13,9 @@ class FieldPerson
     private int $typeId;
     private int $countryId;
     private array $agentSpecialities;
+    private int $mission;
 
-    public function __construct(int $id, string $firstName, string $lastName, int $birthDate, string $codeName, int $statusId, int $typeId, int $countryId, array $agentSpecialities)
+    public function __construct(int $id, string $firstName, string $lastName, int $birthDate, string $codeName, int $statusId, int $typeId, int $countryId, array $agentSpecialities, int $mission)
     {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -25,6 +26,7 @@ class FieldPerson
         $this->typeId = $typeId;
         $this->countryId = $countryId;
         $this->agentSpecialities = $agentSpecialities;
+        $this->mission = $mission;
     }
 
     public function getId(): int
@@ -130,6 +132,16 @@ class FieldPerson
     {
         $this->agentSpecialities->removeElement($speciality);
         return $this;
+    }
+
+    public function getMission(): int
+    {
+        return $this->mission;
+    }
+
+    public function setMission(int $mission): void
+    {
+        $this->mission = $mission;
     }
 
 
