@@ -26,35 +26,44 @@ require_once (__DIR__ . '/../templates/front_header.html');
                 $missionArray = json_decode(json_encode($mission), true);
 
                 $statusId = $missionArray['status'];
-                $statementBis = $pdo->prepare('SELECT * FROM mission_status WHERE id LIKE ?');
-                $statementBis->bindParam(1, $statusId, PDO::PARAM_INT);
+                $statementTwo = $pdo->prepare('SELECT * FROM mission_status WHERE id LIKE ?');
+                $statementTwo->bindParam(1, $statusId, PDO::PARAM_INT);
 
-                if ($statementBis->execute()){
-                    $statusName = $statementBis->fetch();
+                if ($statementTwo->execute()){
+                    $statusName = $statementTwo->fetch();
 
                     $countryId = $missionArray['country'];
-                    $statementTri = $pdo->prepare('SELECT * FROM countries WHERE id LIKE ?');
-                    $statementTri->bindParam(1, $countryId, PDO::PARAM_INT);
+                    $statementThree = $pdo->prepare('SELECT * FROM countries WHERE id LIKE ?');
+                    $statementThree->bindParam(1, $countryId, PDO::PARAM_INT);
 
-                    if ($statementTri->execute()){
-                        $countryName = $statementTri->fetch();
+                    if ($statementThree->execute()){
+                        $countryName = $statementThree->fetch();
 
-                        echo '
-                        <div class="container-fluid">
-                            <h3>Nom de la mission : '.$missionArray['title'].'</h3>
-                            <div>
-                                <p class="mt-3">Nom de code : '.$missionArray['code_name'].'</p>
-                                <p>Pays d\'intervention : '.$countryName['french_name'].'</p>
-                                <p>Statut de la mission : '.$statusName['name'].'</p>
-                                <p>Date de début : '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
-                                <p>Date de fin : '.dateToFrench($missionArray['end_date'], 'l d F o').'</p>
-                                <p>
-                                Description : <br>
-                                '.$missionArray['description'].'
-                                </p>
+                        $specialityId = $missionArray['required_speciality'];
+                        $statementFour = $pdo->prepare('SELECT * FROM specialities WHERE id LIKE ?');
+                        $statementFour->bindParam(1, $specialityId, PDO::PARAM_INT);
+
+                        if($statementFour->execute()){
+                            $specialityName = $statementFour->fetch();
+
+                            echo '
+                            <div class="container-fluid">
+                                <h3>Nom de la mission : '.$missionArray['title'].'</h3>
+                                <div>
+                                    <p class="mt-3">Nom de code : '.$missionArray['code_name'].'</p>
+                                    <p>Pays d\'intervention : '.$countryName['french_name'].'</p>
+                                    <p>Statut de la mission : '.$statusName['name'].'</p>
+                                    <p>Spécialité requise : '.$specialityName['name'].'</p>
+                                    <p>Date de début : '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
+                                    <p>Date de fin : '.dateToFrench($missionArray['end_date'], 'l d F o').'</p>
+                                    <p>
+                                    Description : <br>
+                                    '.$missionArray['description'].'
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        ';
+                            ';
+                        }
                     }
                 }
             }
