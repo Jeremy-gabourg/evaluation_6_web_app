@@ -54,7 +54,7 @@ require_once (__DIR__ . '/../templates/front_header.html');
                         if($statementFour->execute()){
                             $specialityName = $statementFour->fetch(PDO::FETCH_ASSOC);
 
-//                          Préparation d'une 5ème requête pour récupérer les personnes de terrain et leur type de la table 'field_persons' à partir de leur ID
+//                          Préparation d'une 5ème requête pour récupérer les cibles parmi les personnes de terrain de la table 'field_persons' à partir de l'ID de mission
                             $statementFive = $pdo->prepare('SELECT * FROM field_persons WHERE mission = :missionId AND type = :typeId');
                             $statementFive->bindParam('missionId', $missionArray['id'], PDO::PARAM_INT);
                             $statementFive->bindValue('typeId', 3, PDO::PARAM_INT);
@@ -62,7 +62,14 @@ require_once (__DIR__ . '/../templates/front_header.html');
                             if ($statementFive->execute()){
                                 $targets = $statementFive->fetchAll(PDO::FETCH_ASSOC);
 
-                                print_r($targets);
+//                                  Préparation d'une 6ème requête pour récupérer les agents parmi les personnes de terrain de la table 'field_persons' à partir de l'ID de mission
+                                    $statementSix = $pdo->prepare('SELECT * FROM field_persons WHERE mission = :missionId AND type = :typeId');
+                                    $statementSix->bindParam('missionId', $missionArray['id'], PDO::PARAM_INT);
+                                    $statementSix->bindValue('typeId', 1, PDO::PARAM_INT);
+
+                                    if($statementSix->execute()){
+                                        $agents = $statementSix->fetchAll(PDO::FETCH_ASSOC);
+
 
                                         echo '
                                         <div class="container-fluid">
@@ -73,20 +80,37 @@ require_once (__DIR__ . '/../templates/front_header.html');
                                                 <p>Statut de la mission : '.$statusName['name'].'</p>
                                                 <p>Spécialité requise : '.$specialityName['name'].'</p>';
 
-                                            $numbersOfTargets = count($targets);
-                                            if ($numbersOfTargets>1) {
-                                                echo'<p>Cibles : <ul>';
-                                                foreach($targets as $target){
+                                        $numbersOfTargets = count($targets);
+                                        if ($numbersOfTargets>1) {
+                                            echo'<p>Cibles : <ul>';
+                                            foreach($targets as $target){
+                                                if(isset($target['code_name'])){
+                                                    echo '<li>'.$target['first_name'].' '.$target['last_name'].' (nom de code : '.$target['code_name'].')</li>';
+                                                } else {
                                                     echo '<li>'.$target['first_name'].' '.$target['last_name'].'</li>';
                                                 }
-                                                echo '</ul></p>';
-
-                                            } else {
+                                            }
+                                            echo '</ul></p>';
+                                        } else {
+                                            if(isset($targets[0]['code_name'])){
                                                 echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].' (nom de code : '.$targets[0]['code_name'].')</p>';
+                                            } else {
+                                                echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].'</p>';
+                                            }
+                                        }
+
+                                        $numbersOfAgents = count($agents);
+                                        if ($numbersOfAgents>1) {
+                                            echo'<p>Agents : <ul>';
+                                            foreach($agents as $agent){
+                                                    echo '<li>'.$agent['first_name'].' '.$agent['last_name'].' (code d\'identification : '.$agent['code_name'].')</li></ul></p>';
+                                                }
+                                        } else {
+                                                echo'<p>Agent : '.$agents[0]['first_name'].' '.$agents[0]['last_name'].' (code d\'identification : '.$agents[0]['code_name'].')</p>';
                                             }
 
 
-                                            echo'<p>Date de début : '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
+                                        echo'<p>Date de début : '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
                                                 <p>Date de fin : '.dateToFrench($missionArray['end_date'], 'l d F o').'</p>
                                                 <p>
                                                 Description : <br>
@@ -96,6 +120,7 @@ require_once (__DIR__ . '/../templates/front_header.html');
                                         </div>
                                         ';
 
+                                    }
                                 }
                             }
                         }
