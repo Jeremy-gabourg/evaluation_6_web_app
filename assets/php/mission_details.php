@@ -84,16 +84,16 @@ require_once (__DIR__ . '/../templates/front_header.html');
                                         if ($numbersOfTargets>1) {
                                             echo'<p>Cibles : <ul>';
                                             foreach($targets as $target){
-                                                if(isset($target['code_name'])){
-                                                    echo '<li>'.$target['first_name'].' '.$target['last_name'].' (nom de code : '.$target['code_name'].')</li>';
+                                                if(isset($target['code_name_or_identification'])){
+                                                    echo '<li>'.$target['first_name'].' '.$target['last_name'].' (nom de code : '.$target['code_name_or_identification'].')</li>';
                                                 } else {
                                                     echo '<li>'.$target['first_name'].' '.$target['last_name'].'</li>';
                                                 }
                                             }
                                             echo '</ul></p>';
                                         } else {
-                                            if(isset($targets[0]['code_name'])){
-                                                echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].' (nom de code : '.$targets[0]['code_name'].')</p>';
+                                            if(isset($targets[0]['code_name_or_identification'])){
+                                                echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].' (nom de code : '.$targets[0]['code_name_or_identification'].')</p>';
                                             } else {
                                                 echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].'</p>';
                                             }
@@ -103,10 +103,10 @@ require_once (__DIR__ . '/../templates/front_header.html');
                                         if ($numbersOfAgents>1) {
                                             echo'<p>Agents : <ul>';
                                             foreach($agents as $agent){
-                                                    echo '<li>'.$agent['first_name'].' '.$agent['last_name'].' (code d\'identification : '.$agent['code_name'].')</li></ul></p>';
+                                                    echo '<li>'.$agent['first_name'].' '.$agent['last_name'].' (code d\'identification : '.$agent['code_name_or_identification'].')</li></ul></p>';
                                                 }
                                         } else {
-                                                echo'<p>Agent : '.$agents[0]['first_name'].' '.$agents[0]['last_name'].' (code d\'identification : '.$agents[0]['code_name'].')</p>';
+                                                echo'<p>Agent : '.$agents[0]['first_name'].' '.$agents[0]['last_name'].' (code d\'identification : '.$agents[0]['code_name_or_identification'].')</p>';
                                             }
 
 
