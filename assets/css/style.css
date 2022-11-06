@@ -1,7 +1,28 @@
+html, body {
+    width : 100%;
+    min-height: 100vh;
+}
+
 .material-symbols-outlined {
     font-variation-settings:
             'FILL' 0,
             'wght' 400,
             'GRAD' 0,
             'opsz' 48
+}
+
+header {
+    max-height: 20vh;
+}
+main {
+    min-height: calc(100vh - 20vh);
+}
+
+.front-footer {
+    display: flex;
+    background: #1A2B33;
+}
+
+.footer-image {
+    margin: 0 auto;
 }

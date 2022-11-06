@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__ . '/../templates/front_header.html');
+require_once (__DIR__ . '/../templates/front_header.php');
 ?>
 <main>
     <h1 class="text-center  mt-4">Détails de la mission</h1>
@@ -73,49 +73,41 @@ require_once (__DIR__ . '/../templates/front_header.html');
 
                                         echo '
                                         <div class="container-fluid">
-                                            <h3>Nom de la mission : '.$missionArray['title'].'</h3>
+                                            <h3 class="mt-4"><span class="text-decoration-underline">Nom :</span> '.$missionArray['title'].'</h3>
                                             <div>
-                                                <p class="mt-3">Nom de code : '.$missionArray['code_name'].'</p>
-                                                <p>Pays d\'intervention : '.$countryName['french_name'].'</p>
-                                                <p>Statut de la mission : '.$statusName['name'].'</p>
-                                                <p>Spécialité requise : '.$specialityName['name'].'</p>';
+                                                <p><span class="text-decoration-underline">Nom de code :</span> '.$missionArray['code_name'].'</p>
+                                                <p class="mt-4"><span class="text-decoration-underline">Pays d\'intervention :</span> '.$countryName['french_name'].'</p>
+                                                <p><span class="text-decoration-underline">Statut de la mission :</span> '.$statusName['name'].'</p>
+                                                <p><span class="text-decoration-underline">Spécialité requise :</span> '.$specialityName['name'].'</p>';
 
                                         $numbersOfTargets = count($targets);
                                         if ($numbersOfTargets>1) {
-                                            echo'<p>Cibles : <ul>';
+                                            echo'<p class="text-decoration-underline">Cibles : <ul>';
                                             foreach($targets as $target){
-                                                if(isset($target['code_name_or_identification'])){
                                                     echo '<li>'.$target['first_name'].' '.$target['last_name'].' (nom de code : '.$target['code_name_or_identification'].')</li>';
-                                                } else {
-                                                    echo '<li>'.$target['first_name'].' '.$target['last_name'].'</li>';
-                                                }
                                             }
                                             echo '</ul></p>';
                                         } else {
-                                            if(isset($targets[0]['code_name_or_identification'])){
-                                                echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].' (nom de code : '.$targets[0]['code_name_or_identification'].')</p>';
-                                            } else {
-                                                echo'<p>Cible : '.$targets[0]['first_name'].' '.$targets[0]['last_name'].'</p>';
-                                            }
+                                                echo'<p><span class="text-decoration-underline">Cible :</span> '.$targets[0]['first_name'].' '.$targets[0]['last_name'].' (nom de code : '.$targets[0]['code_name_or_identification'].')</p>';
                                         }
 
                                         $numbersOfAgents = count($agents);
                                         if ($numbersOfAgents>1) {
-                                            echo'<p>Agents : <ul>';
+                                            echo'<p class="text-decoration-underline">Agents : <ul>';
                                             foreach($agents as $agent){
                                                     echo '<li>'.$agent['first_name'].' '.$agent['last_name'].' (code d\'identification : '.$agent['code_name_or_identification'].')</li></ul></p>';
                                                 }
                                         } else {
-                                                echo'<p>Agent : '.$agents[0]['first_name'].' '.$agents[0]['last_name'].' (code d\'identification : '.$agents[0]['code_name_or_identification'].')</p>';
+                                                echo'<p><span class="text-decoration-underline">Agent :</span>  '.$agents[0]['first_name'].' '.$agents[0]['last_name'].' (code d\'identification : '.$agents[0]['code_name_or_identification'].')</p>';
                                             }
 
 
-                                        echo'<p>Date de début : '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
-                                                <p>Date de fin : '.dateToFrench($missionArray['end_date'], 'l d F o').'</p>
-                                                <p>
-                                                Description : <br>
-                                                '.$missionArray['description'].'
-                                                </p>
+                                        echo'<p><span class="text-decoration-underline">Date de début :</span> '.dateToFrench($missionArray['start_date'],'l d F o').'</p>
+                                             <p><span class="text-decoration-underline">Date de fin :</span> '.dateToFrench($missionArray['end_date'], 'l d F o').'</p>
+                                             <p>
+                                             <span class="text-decoration-underline">Description :</span> <br>
+                                             '.$missionArray['description'].'
+                                             </p>
                                             </div>
                                         </div>
                                         ';
@@ -131,5 +123,5 @@ require_once (__DIR__ . '/../templates/front_header.html');
     ?>
 </main>
 <?php
-require_once (__DIR__ . '/../templates/front_footer.html');
+require_once (__DIR__ . '/../templates/front_footer.php');
 ?>
