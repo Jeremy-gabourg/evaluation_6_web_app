@@ -1,5 +1,5 @@
 html, body {
-    width : 100%;
+    min-width : 100%;
     min-height: 100vh;
 }
 
@@ -19,7 +19,7 @@ main {
 }
 
 .front-footer {
-    display: flex;
+    display: block;
     background: #1A2B33;
 }
 
