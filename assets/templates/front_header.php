@@ -12,7 +12,9 @@
     récupérez votre mission et accomplissez la! Une fois la preuve du travail réalisé fournie, un virement vous sera fait
     dans les 48H">
 </head>
-<body class="bg-dark text-success">
+
+<body class="bg-dark text-success container-fluid">
+
     <header class="container-fluid d-flex">
         <a class="flex-grow-1 p-2 text-decoration-none text-success" href="/index.php">
             <span class="material-symbols-outlined">public</span>
