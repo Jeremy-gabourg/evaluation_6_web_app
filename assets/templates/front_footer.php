@@ -2,7 +2,7 @@
     <div>
         <img class="footer-image"  src="/assets/files/3576939.jpg" alt="Image d'un espion" height="100px">
     </div>
-    <p class="pb-3">Agence Internationale d'Espionnage</p>
+    <p class="pb-3 d-block d-md-none">Agence Internationale d'Espionnage</p>
 </footer>
 </body>
 </html>
