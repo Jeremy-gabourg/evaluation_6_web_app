@@ -20,8 +20,9 @@ include_once ('../templates/back_template.php');
             </div>
 
         </main>
+
     </div>
-    </div>
+
 </body>
 
 </html>

@@ -73,9 +73,9 @@ require_once (__DIR__ . '/../templates/front_header.php');
 
                                         echo '
                                         <div class="container-fluid">
-                                            <h3 class="mt-4"><span class="text-decoration-underline">Nom :</span> '.$missionArray['title'].'</h3>
+                                            <h3 class="mt-4"><span class="text-decoration-underline">Titre :</span> '.$missionArray['title'].'</h3>
                                             <div>
-                                                <p><span class="text-decoration-underline">Nom de code :</span> '.$missionArray['code_name'].'</p>
+                                                <p class="mt-4"><span class="text-decoration-underline">Nom de code :</span> '.$missionArray['code_name'].'</p>
                                                 <p class="mt-4"><span class="text-decoration-underline">Pays d\'intervention :</span> '.$countryName['french_name'].'</p>
                                                 <p><span class="text-decoration-underline">Statut de la mission :</span> '.$statusName['name'].'</p>
                                                 <p><span class="text-decoration-underline">Spécialité requise :</span> '.$specialityName['name'].'</p>';
