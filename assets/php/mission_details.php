@@ -1,7 +1,7 @@
 <?php
 require_once (__DIR__ . '/../templates/front_header.php');
 ?>
-<main>
+<main class="container-md">
     <h1 class="text-center  mt-4">Détails de la mission</h1>
     <?php
     if (!isset ($_GET['missionId'])) {

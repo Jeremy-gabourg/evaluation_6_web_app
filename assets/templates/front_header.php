@@ -5,7 +5,7 @@
     <title>AIE : Agence Internationale d'Espionnage</title>
     <link rel="stylesheet"href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <script src="../../vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
     <meta name="viewport", content="width=device-width, initial-scale=1"
     <meta name="viewport", content="height=device-height, initial-scale=1"
     <meta name="description", content="Bienvenue sur le site internet d'espionnage le plus libre du monde. Entrez,

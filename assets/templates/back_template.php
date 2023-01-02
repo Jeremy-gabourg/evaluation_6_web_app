@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon profil</title>
-    <link rel="stylesheet" href="../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../../vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport", content="width=device-width, initial-scale=1"
     <meta name="viewport", content="height=device-height, initial-scale=1"
 </head>
 
-<body class="bg-dark container-fluid">
+<body class="bg-dark body-color-dark container-fluid">
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="aie" viewBox="0 0 16 16">
@@ -40,85 +40,299 @@
         </symbol>
     </svg>
 
-    <div class="row single-row">
+    <nav class="navbar navbar-dark bg-black sticky-top d-md-none">
+        <div class="container-fluid text-success">
+            <a href="/" class="navbar-brand text-success text-decoration-none">
+                <svg class="bi pe-none me-2 nav-icon" width="40" height="32"><use xlink:href="#aie"/></svg>
+                <span class="fs-5">Agence Internationale d'Espionnage </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end bg-black text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title fw-bold" id="offcanvasDarkNavbarLabel">Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
 
-        <nav class="col-3 bg-black back-navbar">
+                <hr>
+
+                <div class="offcanvas-body text-success">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <div class="accordion accordion-flush mb-auto" id="accordionFlushExample">
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#administrators"/></svg>
+                                        Administrateurs
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#missions"/></svg>
+                                        Missions
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Types</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Statuts</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                        <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#countries"/></svg>
+                                        Pays
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingFour">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                        <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#spy"/></svg>
+                                        Personnels de terrain
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Types</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Statuts</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingFive">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                        <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#safehouses"/></svg>
+                                        Planques
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Types</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingSix">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                        <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#specialities"/></svg>
+                                        Spécialités
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="accordion-item bg-black">
+                                <h2 class="accordion-header" id="flush-headingSeven">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                                        <strong>Mon profil</strong>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="list-group nav-link">
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Mon profil</a>
+                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Se déconnecter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+
+        <nav class="d-none d-md-grid col-md-4 col-lg-3 bg-black back-navbar">
 
             <div class="d-flex flex-column flex-shrink-0 p-3">
                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-success text-decoration-none">
                     <svg class="bi pe-none me-2 nav-icon" width="40" height="32"><use xlink:href="#aie"/></svg>
                     <span class="fs-5">Agence Internationale d'Espionnage </span>
                 </a>
+
                 <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <ul href="#" class="nav-link text-success" aria-current="page">
-                            <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#administrators"/></svg>
-                            Administrateurs
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Liste</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Ajouter</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <ul href="#" class="nav-link text-success" aria-current="page">
-                            <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#missions"/></svg>
-                            Missions
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Liste</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Ajouter/modifier</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Types</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Statuts</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <ul href="#" class="nav-link text-success" aria-current="page">
-                            <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#countries"/></svg>
-                            Pays
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Liste</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Ajouter/modifier</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <ul href="#" class="nav-link text-success" aria-current="page">
-                            <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#spy"/></svg>
-                            Personnels de terrain
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Liste</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Ajouter/modifier</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Types</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Statuts</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <ul href="#" class="nav-link text-success" aria-current="page">
-                            <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#safehouses"/></svg>
-                            Planques
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Liste</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Ajouter/modifier</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Types</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <ul href="#" class="nav-link text-success" aria-current="page">
-                            <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#specialities"/></svg>
-                            Spécialités
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Liste</a></li>
-                                <li class="ms-5"><a href="#" class="link-success text-decoration-none">Ajouter/modifier</a></li>
-                        </ul>
-                    </li>
-                </ul>
+
+                <div class="accordion accordion-flush mb-auto" id="accordionFlushExample">
+
+                    <div class="accordion-item bg-black">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#administrators"/></svg>
+                                Administrateurs
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="list-group nav-link">
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item bg-black">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#missions"/></svg>
+                                Missions
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="list-group nav-link">
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Types</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Statuts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item bg-black">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#countries"/></svg>
+                                Pays
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="list-group nav-link">
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item bg-black">
+                        <h2 class="accordion-header" id="flush-headingFour">
+                            <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#spy"/></svg>
+                                Personnels de terrain
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="list-group nav-link">
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Types</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Statuts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item bg-black">
+                        <h2 class="accordion-header" id="flush-headingFive">
+                            <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#safehouses"/></svg>
+                                Planques
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="list-group nav-link">
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Types</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item bg-black">
+                        <h2 class="accordion-header" id="flush-headingSix">
+                            <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#specialities"/></svg>
+                                Spécialités
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="list-group nav-link">
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter/modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
                 <hr>
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <div class="dropdown d-flex">
+                    <a href="#" class="btn btn-outline-success dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong>mdo</strong>
+                        <strong>Mon profil</strong>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Sign out</a></li>
                     </ul>
                 </div>
+
             </div>
 
         </nav>
