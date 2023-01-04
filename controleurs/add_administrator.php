@@ -1,5 +1,5 @@
 <?php
-include_once ('../templates/back_template.php');
+include_once('../vues/back_template.php');
 ?>
         <main class="col">
 

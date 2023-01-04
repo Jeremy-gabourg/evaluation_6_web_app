@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__ . '/../templates/front_header.php');
+require_once (__DIR__ . '/../vues/front_header.php');
 ?>
 <main class="container-md">
     <h1 class="text-center mt-4 pb-4">Page de connexion</h1>
@@ -20,7 +20,7 @@ require_once (__DIR__ . '/../templates/front_header.php');
             </div>
             <div class="text-center">
 <!--                <button class="btn btn-success btn-lg mt-4"  type="submit">Connexion</button>-->
-                <a class="btn btn-success btn-lg mt-4" href="/assets/php/add_administrator.php" role="button">Connexion</a>
+                <a class="btn btn-success btn-lg mt-4" href="/controleurs/add_administrator.php" role="button">Connexion</a>
             </div>
         </form>
 
@@ -28,5 +28,5 @@ require_once (__DIR__ . '/../templates/front_header.php');
 </main>
 
 <?php
-require_once (__DIR__ . '/../templates/front_footer.php');
+require_once (__DIR__ . '/../vues/front_footer.php');
 ?>

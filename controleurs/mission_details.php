@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__ . '/../templates/front_header.php');
+require_once (__DIR__ . '/../vues/front_header.php');
 ?>
 <main class="container-md">
     <h1 class="text-center  mt-4">Détails de la mission</h1>
@@ -7,7 +7,7 @@ require_once (__DIR__ . '/../templates/front_header.php');
     if (!isset ($_GET['missionId'])) {
         echo 'Veuillez cliquer sur une mission svp';
     } else {
-        require_once (__DIR__.'/bdd_connexion.php');
+        require_once(__DIR__ . '/bdd_connexion.php');
 
 //      Préparer une requête pour récupérer les détails de missions de la table 'missions' à partir de l'ID
         $statement = $pdo->prepare('SELECT * FROM missions WHERE id = :id');
@@ -123,5 +123,5 @@ require_once (__DIR__ . '/../templates/front_header.php');
     ?>
 </main>
 <?php
-require_once (__DIR__ . '/../templates/front_footer.php');
+require_once (__DIR__ . '/../vues/front_footer.php');
 ?>

@@ -12,8 +12,8 @@
             <tbody>
             <?php
             try {
-                require_once (__DIR__.'/../../Class/Mission.php');
-                require_once (__DIR__.'/bdd_connexion.php');
+                require_once(__DIR__.'/../modeles/Mission.php');
+                require_once(__DIR__.'/bdd_connexion.php');
                 $statement = $pdo->prepare('SELECT * FROM missions LIMIT :start, 5');
                 if (!isset($_GET['page'])){
                     $_GET['page']=1;
@@ -25,7 +25,7 @@
                         $mission = json_decode(json_encode($missions), true);
                         $statusId = $mission['status'];
 
-                        require_once (__DIR__.'/../../Class/MissionStatus.php');
+                        require_once(__DIR__ . '/../modeles/MissionStatus.php');
 
                         $statementBis = $pdo->prepare('SELECT * FROM mission_status WHERE id LIKE ?');
                         $statementBis->bindParam(1, $statusId, PDO::PARAM_INT);
@@ -37,7 +37,7 @@
                                     <td  class="d-none d-md-block">'.$missions['code_name'].'</td>
                                     <td>'.$statusName['name'].'</td>
                                     <td>
-                                        <a role="button" class="text-success" href="./assets/php/mission_details.php?missionId='.$missions['id'].'">
+                                        <a role="button" class="text-success" href="/controleurs/mission_details.php?missionId='.$missions['id'].'">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                                               <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
