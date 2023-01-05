@@ -5,126 +5,354 @@ class Mission
     private int $id;
     private string $title;
     private string $description;
-    private string $codeName;
-    private int $startDate;
-    private int $endDate;
-    private int $countryId;
-    private int $typeId;
-    private int $statusId;
-    private int $specialityId;
+    private string $code_name;
+    private int $country;
+    private int $type;
+    private int $status;
+    private int $required_speciality;
+    private string $start_date;
+    private string $end_date;
 
-    public function __construct(int $id, string $title, string $description, string $codeName, int $startDate, int $endDate, int $countryId, int $typeId, int $statusId, int $specialityId)
-    {
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->codeName = $codeName;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
-        $this->countryId = $countryId;
-        $this->typeId = $typeId;
-        $this->statusId = $statusId;
-        $this->specialityId = $specialityId;
-    }
-
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     */
     public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
+    /**
+     * @return string
+     */
     public function getCodeName(): string
     {
-        return $this->codeName;
+        return $this->code_name;
     }
 
-    public function setCodeName(string $codeName): void
+    /**
+     * @param string $code_name
+     */
+    public function setCodeName(string $code_name): void
     {
-        $this->codeName = $codeName;
+        $this->code_name = $code_name;
     }
 
-    public function getStartDate(): int
+    /**
+     * @return int
+     */
+    public function getCountry(): int
     {
-        return $this->startDate;
+        return $this->country;
     }
 
-    public function setStartDate(int $startDate): void
+    /**
+     * @param int $country
+     */
+    public function setCountry(int $country): void
     {
-        $this->startDate = $startDate;
+        $this->country = $country;
     }
 
-    public function getEndDate(): int
+    /**
+     * @return int
+     */
+    public function getType(): int
     {
-        return $this->endDate;
+        return $this->type;
     }
 
-    public function setEndDate(int $endDate): void
+    /**
+     * @param int $type
+     */
+    public function setType(int $type): void
     {
-        $this->endDate = $endDate;
+        $this->type = $type;
     }
 
-    public function getCountryId(): int
+    /**
+     * @return int
+     */
+    public function getStatus(): int
     {
-        return $this->countryId;
+        return $this->status;
     }
 
-    public function setCountryId(int $countryId): void
+    /**
+     * @param int $status
+     */
+    public function setStatus(int $status): void
     {
-        $this->countryId = $countryId;
+        $this->status = $status;
     }
 
-    public function getTypeId(): int
+    /**
+     * @return int
+     */
+    public function getRequiredSpeciality(): int
     {
-        return $this->typeId;
+        return $this->required_speciality;
     }
 
-    public function setTypeId(int $typeId): void
+    /**
+     * @param int $required_speciality
+     */
+    public function setRequiredSpeciality(int $required_speciality): void
     {
-        $this->typeId = $typeId;
+        $this->required_speciality = $required_speciality;
     }
 
-    public function getStatusId(): int
+    /**
+     * @return string
+     */
+    public function getStartDate(): string
     {
-        return $this->statusId;
+        return $this->start_date;
     }
 
-    public function setStatusId(int $statusId): void
+    /**
+     * @param string $start_date
+     */
+    public function setStartDate(string $start_date): void
     {
-        $this->statusId = $statusId;
+        $this->start_date = $start_date;
     }
 
-    public function getSpecialityId(): int
+    /**
+     * @return string
+     */
+    public function getEndDate(): string
     {
-        return $this->specialityId;
+        return $this->end_date;
     }
 
-    public function setSpecialityId(int $specialityId): void
+    /**
+     * @param string $end_date
+     */
+    public function setEndDate(string $end_date): void
     {
-        $this->specialityId = $specialityId;
+        $this->end_date = $end_date;
     }
 
+
+    public function displayMissionsList()
+    {
+        try {
+            require_once(__DIR__.'/MissionStatus.php');
+            require_once(__DIR__.'/../controleurs/bdd_connexion.php');
+
+            $sql = 'SELECT * FROM missions LIMIT :start, 5';
+
+            $statement = $pdo->prepare($sql);
+            if (!isset($_GET['page'])){
+                $_GET['page']=1;
+            }
+            $statement->bindValue('start', 5 * ($_GET['page'] - 1), PDO::PARAM_INT);
+            if ($statement->execute()) {
+                while($mission = $statement->fetchObject('Mission')){
+                    $statusId = $mission->getStatus();
+
+                    require_once(__DIR__ . '/../modeles/MissionStatus.php');
+                    $sql2 = 'SELECT * FROM mission_status WHERE id LIKE ?';
+                    $statementBis = $pdo->prepare($sql2);
+                    $statementBis->bindParam(1, $statusId, PDO::PARAM_INT);
+                    if ($statementBis->execute()){
+                        $statusName = $statementBis->fetchObject('MissionStatus');
+                        echo     '<tr>
+                                                <th scope="row">'.$mission->getId().'</th>
+                                                <td>'.$mission->getTitle().'</td>
+                                                <td  class="d-none d-md-block">'.$mission->getCodeName().'</td>
+                                                <td>'.$statusName->getName().'</td>
+                                                <td>
+                                                    <a role="button" class="text-success" href="/controleurs/mission_details.php?missionId='.$mission->getId().'">
+                                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                                      </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        ';
+                    }
+                } echo '    </tbody>
+                            </table>
+                            </div>
+                            </main>';
+            }
+            else {
+                $errorInfo = $statement->errorInfo();
+                echo $errorInfo[2];
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base';
+        }
+    }
+
+    public function displayMissionDetails()
+    {
+        echo '    <main class="container-md">
+                <h1 class="text-center  mt-4">Détails de la mission</h1>';
+
+        if (!isset ($_GET['missionId'])) {
+            echo 'Veuillez cliquer sur une mission svp';
+        } else {
+            require_once(__DIR__.'/MissionStatus.php');
+            require_once(__DIR__.'/Country.php');
+            require_once(__DIR__.'/Speciality.php');
+
+
+            require_once(__DIR__ . '/../controleurs/bdd_connexion.php');
+
+        //      Préparer une requête pour récupérer les détails de missions de la table 'missions' à partir de l'ID
+            $statement = $pdo->prepare('SELECT * FROM missions WHERE id = :id');
+            $missionId = $_GET['missionId'];
+            $statement->bindParam('id', $missionId, PDO::PARAM_INT);
+
+            setlocale(LC_TIME, 'fr_FR', 'French');
+            function dateToFrench($date, $format) :string
+            {
+                $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+                $french_days = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
+                $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+                return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date) ) ) );
+            }
+
+            if ($statement->execute()) {
+                while ($mission = $statement->fetchObject('Mission')) {
+
+                    $statusId = $mission->getStatus();
+
+        //              Préparation d'une seconde requête pour récupérer le nom du statut de mission dans la table 'mission_status' à partir de l'ID
+                    $statementTwo = $pdo->prepare('SELECT * FROM mission_status WHERE id = :statusId');
+                    $statementTwo->bindParam('statusId', $statusId, PDO::PARAM_INT);
+
+                    if ($statementTwo->execute()){
+                        $status = $statementTwo->fetchObject('MissionStatus');
+
+                        $countryId = $mission->getCountry();
+
+        //                  Préparation d'une 3ème requête pour récupérer le nom de pays de la table 'countries' à partir de l'ID
+                        $statementThree = $pdo->prepare('SELECT * FROM countries WHERE id = :countryId');
+                        $statementThree->bindParam('countryId', $countryId, PDO::PARAM_INT);
+
+                        if ($statementThree->execute()){
+                            $country = $statementThree->fetchObject('Country');
+
+                            $specialityId = $mission->getRequiredSpeciality();
+
+        //                      Préparation d'une 4ème requête pour récupérer le nom de la spécialité de la tables 'specialities' à partir de l'ID
+                            $statementFour = $pdo->prepare('SELECT * FROM specialities WHERE id = :specialityId');
+                            $statementFour->bindParam('specialityId', $specialityId, PDO::PARAM_INT);
+
+                            if($statementFour->execute()){
+                                $speciality = $statementFour->fetchObject('Speciality');
+
+        //                          Préparation d'une 5ème requête pour récupérer les cibles parmi les personnes de terrain de la table 'field_persons' à partir de l'ID de mission
+                                $statementFive = $pdo->prepare('SELECT * FROM field_persons WHERE mission = :missionId AND type = :typeId');
+                                $statementFive->bindParam('missionId', $missionId, PDO::PARAM_INT);
+                                $statementFive->bindValue('typeId', 3, PDO::PARAM_INT);
+
+                                if ($statementFive->execute()){
+                                    $targets = $statementFive->fetchAll(PDO::FETCH_ASSOC);
+
+        //                                  Préparation d'une 6ème requête pour récupérer les agents parmi les personnes de terrain de la table 'field_persons' à partir de l'ID de mission
+                                    $statementSix = $pdo->prepare('SELECT * FROM field_persons WHERE mission = :missionId AND type = :typeId');
+                                    $statementSix->bindParam('missionId', $missionId, PDO::PARAM_INT);
+                                    $statementSix->bindValue('typeId', 1, PDO::PARAM_INT);
+
+                                    if($statementSix->execute()){
+                                        $agents = $statementSix->fetchAll(PDO::FETCH_ASSOC);
+
+                                        echo '
+                                                <div class="container-fluid">
+                                                    <h3 class="mt-4"><span class="text-decoration-underline">Titre :</span> '.$mission->getTitle().'</h3>
+                                                    <div>
+                                                        <p class="mt-4"><span class="text-decoration-underline">Nom de code :</span> '.$mission->getCodeName().'</p>
+                                                        <p class="mt-4"><span class="text-decoration-underline">Pays d\'intervention :</span> '.$country->getFrenchName().'</p>
+                                                        <p><span class="text-decoration-underline">Statut de la mission :</span> '.$status->getName().'</p>
+                                                        <p><span class="text-decoration-underline">Spécialité requise :</span> '.$speciality->getName().'</p>';
+
+                                        $numbersOfTargets = count($targets);
+                                        if ($numbersOfTargets>1) {
+                                            echo'<p class="text-decoration-underline">Cibles : <ul>';
+                                            foreach($targets as $target){
+                                                echo '<li>'.$target['first_name'].' '.$target['last_name'].' (nom de code : '.$target['code_name_or_identification'].')</li>';
+                                            }
+                                            echo '</ul></p>';
+                                        } else {
+                                            echo'<p><span class="text-decoration-underline">Cible :</span> '.$targets[0]['first_name'].' '.$targets[0]['last_name'].' (nom de code : '.$targets[0]['code_name_or_identification'].')</p>';
+                                        }
+
+                                        $numbersOfAgents = count($agents);
+                                        if ($numbersOfAgents>1) {
+                                            echo'<p class="text-decoration-underline">Agents : <ul>';
+                                            foreach($agents as $agent){
+                                                echo '<li>'.$agent['first_name'].' '.$agent['last_name'].' (code d\'identification : '.$agent['code_name_or_identification'].')</li></ul></p>';
+                                            }
+                                        } else {
+                                            echo'<p><span class="text-decoration-underline">Agent :</span>  '.$agents[0]['first_name'].' '.$agents[0]['last_name'].' (code d\'identification : '.$agents[0]['code_name_or_identification'].')</p>';
+                                        }
+
+
+                                        echo'<p><span class="text-decoration-underline">Date de début :</span> '.dateToFrench($mission->getStartDate(),'l d F o').'</p>
+                                                     <p><span class="text-decoration-underline">Date de fin :</span> '.dateToFrench($mission->getEndDate(), 'l d F o').'</p>
+                                                     <p>
+                                                     <span class="text-decoration-underline">Description :</span> <br>
+                                                     '.$mission->getDescription().'
+                                                     </p>
+                                                    </div>
+                                                </div>
+                                                ';
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } echo '</main>';
+
+    }
 }
+

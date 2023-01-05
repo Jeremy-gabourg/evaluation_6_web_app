@@ -3,80 +3,107 @@
 class Country
 {
     private int $id;
-    private int $countryCode;
-    private string $alpha2Code;
-    private string $alpha3Code;
-    private string $englishName;
-    private string $frenchName;
+    private int $country_code;
+    private string $alpha2_code;
+    private string $alpha3_code;
+    private string $english_name;
+    private string $french_name;
 
-    public function __construct(int $id, int $countryCode, string $alpha2Code, string $alpha3Code, string $englishName, string $frenchName)
-    {
-        $this->id = $id;
-        $this->countryCode = $countryCode;
-        $this->alpha2Code = $alpha2Code;
-        $this->alpha3Code = $alpha3Code;
-        $this->englishName = $englishName;
-        $this->frenchName = $frenchName;
-    }
-
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
+    /**
+     * @return int
+     */
     public function getCountryCode(): int
     {
-        return $this->countryCode;
+        return $this->country_code;
     }
 
-    public function setCountryCode(int $countryCode): void
+    /**
+     * @param int $country_code
+     */
+    public function setCountryCode(int $country_code): void
     {
-        $this->countryCode = $countryCode;
+        $this->country_code = $country_code;
     }
 
+    /**
+     * @return string
+     */
     public function getAlpha2Code(): string
     {
-        return $this->alpha2Code;
+        return $this->alpha2_code;
     }
 
-    public function setAlpha2Code(string $alpha2Code): void
+    /**
+     * @param string $alpha2_code
+     */
+    public function setAlpha2Code(string $alpha2_code): void
     {
-        $this->alpha2Code = $alpha2Code;
+        $this->alpha2_code = $alpha2_code;
     }
 
+    /**
+     * @return string
+     */
     public function getAlpha3Code(): string
     {
-        return $this->alpha3Code;
+        return $this->alpha3_code;
     }
 
-    public function setAlpha3Code(string $alpha3Code): void
+    /**
+     * @param string $alpha3_code
+     */
+    public function setAlpha3Code(string $alpha3_code): void
     {
-        $this->alpha3Code = $alpha3Code;
+        $this->alpha3_code = $alpha3_code;
     }
 
+    /**
+     * @return string
+     */
     public function getEnglishName(): string
     {
-        return $this->englishName;
+        return $this->english_name;
     }
 
-    public function setEnglishName(string $englishName): void
+    /**
+     * @param string $english_name
+     */
+    public function setEnglishName(string $english_name): void
     {
-        $this->englishName = $englishName;
+        $this->english_name = $english_name;
     }
 
+    /**
+     * @return string
+     */
     public function getFrenchName(): string
     {
-        return $this->frenchName;
+        return $this->french_name;
     }
 
-    public function setFrenchName(string $frenchName): void
+    /**
+     * @param string $french_name
+     */
+    public function setFrenchName(string $french_name): void
     {
-        $this->frenchName = $frenchName;
+        $this->french_name = $french_name;
     }
+
 
 }
