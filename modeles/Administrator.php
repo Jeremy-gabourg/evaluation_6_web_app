@@ -124,11 +124,11 @@ class Administrator
 
             $sql = 'INSERT INTO administrators(first_name, last_name, email, password, creation_date) VALUES (:first_name, :last_name, :email, :password, :creation_date)';
             $statement = $pdo->prepare($sql);
-            $statement->bindParam(':first_name', $this->first_name, PDO::PARAM_STR);
-            $statement->bindParam(':last_name', $this->last_name, PDO::PARAM_STR);
-            $statement->bindParam(':email', $this->email, PDO::PARAM_STR);
-            $statement->bindParam(':password', $this->password, PDO::PARAM_STR);
-            $statement->bindParam(':creation_date', $this->creation_date, PDO::PARAM_STR);
+            $statement->bindParam('first_name', $this->first_name, PDO::PARAM_STR);
+            $statement->bindParam('last_name', $this->last_name, PDO::PARAM_STR);
+            $statement->bindParam('email', $this->email, PDO::PARAM_STR);
+            $statement->bindParam('password', $this->password, PDO::PARAM_STR);
+            $statement->bindParam('creation_date', $this->creation_date, PDO::PARAM_STR);
 
             if ($statement->execute()){
                 echo '
@@ -174,8 +174,8 @@ class Administrator
             $sql2 = 'SELECT * FROM administrators ORDER BY last_name ASC  LIMIT :start, :nbParPage';
             $statement2 = $pdo->prepare($sql2);
 
-            $statement2->bindValue('start', $start, PDO::PARAM_INT);
-            $statement2->bindValue('nbParPage', $nbParPage, PDO::PARAM_INT);
+            $statement2->bindParam('start', $start, PDO::PARAM_INT);
+            $statement2->bindParam('nbParPage', $nbParPage, PDO::PARAM_INT);
 
             if ($statement2->execute()) {
                 while($administrator = $statement2->fetchObject('Administrator')){
@@ -248,7 +248,7 @@ class Administrator
             $sql2='DELETE FROM administrators WHERE id=:id';
             $statement = $pdo->prepare($sql2);
 
-            $statement->bindValue('id', $administratorId, PDO::PARAM_INT);
+            $statement->bindParam('id', $administratorId, PDO::PARAM_INT);
 
             if ($statement->execute()) {
                 echo '<div class="alert alert-success">L\'Administrateur a été supprimé correctement de la base de données</div>';
@@ -276,7 +276,7 @@ class Administrator
                 $sql='SELECT * FROM administrators WHERE email = :email';
 
                 $statement = $pdo->prepare($sql);
-                $statement->bindValue('email',$email, PDO::PARAM_STR);
+                $statement->bindParam('email',$email, PDO::PARAM_STR);
 
                 if ($statement->execute()){
                         $administrator1 = $statement->fetchObject('Administrator');
@@ -284,10 +284,12 @@ class Administrator
                             echo '<div class="alert alert-danger">Le nom d\'utilisateur est incorrect.</div>';
                         } else {
                             if (password_verify($password,$administrator1->getPassword())){
+                                $_SESSION['administratorId'] = $administrator1->getId();
                                 $_SESSION['email'] = $administrator1->getEmail();
                                 $_SESSION['firstName'] = $administrator1->getFirstName();
                                 $_SESSION['lastName'] = $administrator1->getLastName();
                                 $_SESSION['password'] = $administrator1->getPassword();
+                                $_SESSION['connected'] = true;
                                 header('Location: profile.php');
                             } else {echo '<div class="alert alert-danger">Le nom d\'utilisateur ou le mot de passe est incorrect.</div>';}
                         }
@@ -296,6 +298,64 @@ class Administrator
 
         } catch (PDOException $e) {
         echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
+    public function modifyProfile () {
+
+        try {
+
+        $id = $_SESSION['administratorId'];
+
+        require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+
+        $sql = 'SELECT * FROM administrators WHERE id=:id';
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam('id', $id, PDO::PARAM_INT);
+
+        if($statement->execute()){
+            while($administrator = $statement->fetchObject('Administrator')) {
+
+                $this->setLastName(strtoupper(strtolower($_POST['lastName'])));
+                $this->setFirstName(ucfirst(strtolower($_POST['firstName'])));
+                $this->setEmail($_POST['email']);
+                $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
+                $this->setPassword($hashedPassword);
+
+                $id1 = $administrator->getId();
+                $sql1 = 'UPDATE administrators SET first_name=:fisrt_name, last_name=:last_name, email=:email, password=:password WHERE id = :id';
+                $statement1 = $pdo->prepare($sql1);
+                $statement1->bindParam('first_name', $this->first_name, PDO::PARAM_STR);
+                $statement1->bindParam('last_name', $this->last_name, PDO::PARAM_STR);
+                $statement1->bindParam('email', $this->email, PDO::PARAM_STR);
+                $statement1->bindParam('password', $this->password, PDO::PARAM_STR);
+                $statement1->bindParam('id', $id1, PDO::PARAM_INT);
+
+                if ($statement1->execute()){
+                    echo '
+                <div class="alert alert-success mt-4" role="alert">
+                  L\'administrateur a été modifié avec succès!
+                </div>';
+                    $_SESSION['email'] = $this->email;
+                    $_SESSION['firstName'] = $this->first_name;
+                    $_SESSION['lastName'] = $this->last_name;
+                    $_SESSION['password'] = $this->password;
+                header('Location: /controleurs/profile.php');
+                } else {
+                    echo '
+                <div class="alert alert-danger mt-4" role="alert">
+                  Impossible de modifier l\'administrateur !
+                </div>';
+                }   echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+
+                }
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
     }
 

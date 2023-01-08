@@ -2,6 +2,7 @@
 
 session_start();
 
+if(isset($_SESSION['connected'])){
 require_once (__DIR__.'/../vues/back_template.html');
 require_once (__DIR__.'/../vues/administrators_listing_table_header.html');
 
@@ -13,5 +14,7 @@ if (isset($_POST['suppressionbutton'])){
     $administratorObject->removeAdministrator($administratorId);
 }
 $administratorObject->displayAdministratorsList();
-
+} else {
+    header('Location: /index.php');
+}
 

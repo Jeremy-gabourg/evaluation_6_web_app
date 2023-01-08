@@ -24,7 +24,7 @@
         </a>
         <span class="p-1 fw-bold align-self-end">
         <?php
-        if(!isset($_SESSION['firstName'])){
+        if(!isset($_SESSION['connected'])){
             echo '
                     <a role="button" class="btn btn-success d-none d-md-inline-flex" href="/controleurs/connexion_page.php">
                         Connexion
