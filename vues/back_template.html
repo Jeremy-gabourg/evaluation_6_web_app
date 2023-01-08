@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/script.js"></script>
     <meta name="viewport", content="width=device-width, initial-scale=1">
-    <meta name="viewport", content="height=device-height, initial-scale=1">
 </head>
 
 <body class="bg-dark body-color-dark container-fluid">
@@ -63,16 +63,16 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingOneMobile">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneMobile" aria-expanded="false" aria-controls="flush-collapseOneMobile">
                                         <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#administrators"/></svg>
                                         Administrateurs
                                     </button>
                                 </h2>
-                                <div id="flush-collapseOneMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseOneMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingOneMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
-                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
-                                            <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter</a>
+                                            <a href="/controleurs/administrators_listing.php" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                            <a href="/controleurs/add_administrator.php" class="list-group-item list-group-item-action link-success bg-dark">Ajouter</a>
                                         </div>
                                     </div>
                                 </div>
@@ -80,12 +80,12 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingTwoMobile">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwoMobile" aria-expanded="false" aria-controls="flush-collapseTwoMobile">
                                         <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#missions"/></svg>
                                         Missions
                                     </button>
                                 </h2>
-                                <div id="flush-collapseTwoMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseTwoMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingTwoMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
                                             <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
@@ -99,12 +99,12 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingThreeMobile">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreeMobile" aria-expanded="false" aria-controls="flush-collapseThreeMobile">
                                         <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#countries"/></svg>
                                         Pays
                                     </button>
                                 </h2>
-                                <div id="flush-collapseThreeMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseThreeMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingThreeMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
                                             <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
@@ -116,12 +116,12 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingFourMobile">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFourMobile" aria-expanded="false" aria-controls="flush-collapseFourMobile">
                                         <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#spy"/></svg>
                                         Personnels de terrain
                                     </button>
                                 </h2>
-                                <div id="flush-collapseFourMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseFourMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingFourMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
                                             <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
@@ -135,12 +135,12 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingFiveMobile">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFiveMobile" aria-expanded="false" aria-controls="flush-collapseFiveMobile">
                                         <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#safehouses"/></svg>
                                         Planques
                                     </button>
                                 </h2>
-                                <div id="flush-collapseFiveMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseFiveMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingFiveMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
                                             <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
@@ -153,12 +153,12 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingSixMobile">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSixMobile" aria-expanded="false" aria-controls="flush-collapseSixMobile">
                                         <svg class="bi pe-none me-2 nav-icon" width="20" height="20"><use xlink:href="#specialities"/></svg>
                                         Spécialités
                                     </button>
                                 </h2>
-                                <div id="flush-collapseSixMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseSixMobile" class="accordion-collapse collapse" aria-labelledby="flush-headingSixMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
                                             <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
@@ -172,12 +172,12 @@
 
                             <div class="accordion-item bg-black">
                                 <h2 class="accordion-header" id="flush-headingSeven">
-                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                                    <button class="accordion-button btn btn-success text-success bg-black collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSevenMobile" aria-expanded="false" aria-controls="flush-collapseSevenMobile">
                                         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                                         <strong>Mon profil</strong>
                                     </button>
                                 </h2>
-                                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSevenMobile" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <div class="list-group nav-link">
                                             <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Mon profil</a>
@@ -219,8 +219,8 @@
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="list-group nav-link">
-                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
-                                    <a href="#" class="list-group-item list-group-item-action link-success bg-dark">Ajouter</a>
+                                    <a href="/controleurs/administrators_listing.php" class="list-group-item list-group-item-action link-success bg-dark">Liste</a>
+                                    <a href="/controleurs/add_administrator.php" class="list-group-item list-group-item-action link-success bg-dark">Ajouter</a>
                                 </div>
                             </div>
                         </div>

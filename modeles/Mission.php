@@ -180,23 +180,36 @@ class Mission
             require_once(__DIR__.'/MissionStatus.php');
             require_once(__DIR__.'/../controleurs/bdd_connexion.php');
 
-            $sql = 'SELECT * FROM missions LIMIT :start, 5';
-
-            $statement = $pdo->prepare($sql);
             if (!isset($_GET['page'])){
                 $_GET['page']=1;
             }
-            $statement->bindValue('start', 5 * ($_GET['page'] - 1), PDO::PARAM_INT);
-            if ($statement->execute()) {
-                while($mission = $statement->fetchObject('Mission')){
+            $currentpage = $_GET['page'];
+
+            $sql = 'SELECT COUNT(*) AS nb_missions FROM missions';
+            $statement = $pdo->prepare($sql);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            $nbMissions = $result['nb_missions'];
+            $nbParPage = 5;
+            $nbPages = ceil($nbMissions/$nbParPage);
+            $start = ($currentpage*$nbParPage)-$nbParPage;
+
+            $sql1 = 'SELECT * FROM missions ORDER BY id ASC LIMIT :start, :nbParPage';
+            $statement1 = $pdo->prepare($sql1);
+            $statement1->bindValue('start', $start, PDO::PARAM_INT);
+            $statement1->bindValue('nbParPage', $nbParPage, PDO::PARAM_INT);
+
+            if ($statement1->execute()) {
+                while($mission = $statement1->fetchObject('Mission')){
                     $statusId = $mission->getStatus();
 
                     require_once(__DIR__ . '/../modeles/MissionStatus.php');
                     $sql2 = 'SELECT * FROM mission_status WHERE id LIKE ?';
-                    $statementBis = $pdo->prepare($sql2);
-                    $statementBis->bindParam(1, $statusId, PDO::PARAM_INT);
-                    if ($statementBis->execute()){
-                        $statusName = $statementBis->fetchObject('MissionStatus');
+                    $statement2 = $pdo->prepare($sql2);
+                    $statement2->bindParam(1, $statusId, PDO::PARAM_INT);
+                    if ($statement2->execute()){
+                        $statusName = $statement2->fetchObject('MissionStatus');
                         echo     '<tr>
                                                 <th scope="row">'.$mission->getId().'</th>
                                                 <td>'.$mission->getTitle().'</td>
@@ -217,13 +230,29 @@ class Mission
                             </table>
                             </div>
                             </main>';
+                if($nbMissions>$nbParPage){
+                    echo '
+                        <nav aria-label="Page navigation mt-4 bg-dark">
+                          <ul class="pagination justify-content-center mt-4">
+                             <li class="page-item ';if($currentpage == 1){echo'disabled';} else{"";};echo'"><a class="page-link" href="index.php/?page='.($currentpage-1).'">Precédente</a></li>';
+                    for($page=1;$page<=$nbPages;$page++){
+                        echo'<li class="page-item ';if($currentpage==$page){echo'active';}else{"";};echo'"><a class="page-link" href="index.php/?page='.$page.'">'.$page.'</a></li>';
+                    }
+                    echo'<li class="page-item ';if($currentpage == $nbPages){echo'disabled';}else{"";};echo'"><a class="page-link" href="index.php/?page='.($currentpage+1).'">Suivante</a></li>
+                          </ul>
+                        </nav>
+                        </main>
+                        </body>
+                        </html>
+                        ';
+                }
             }
             else {
                 $errorInfo = $statement->errorInfo();
                 echo $errorInfo[2];
             }
         } catch (PDOException $e) {
-            echo 'Une erreur s\'est produite lors de la communication avec la base';
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
     }
 
@@ -232,13 +261,12 @@ class Mission
         echo '    <main class="container-md">
                 <h1 class="text-center  mt-4">Détails de la mission</h1>';
 
-        if (!isset ($_GET['missionId'])) {
-            echo 'Veuillez cliquer sur une mission svp';
+        if ($_GET['missionId']=="" || !isset($_GET['missionId'])) {
+            echo '<div class="alert alert-danger mt-4">Veuillez cliquer sur une mission svp</div>';
         } else {
             require_once(__DIR__.'/MissionStatus.php');
             require_once(__DIR__.'/Country.php');
             require_once(__DIR__.'/Speciality.php');
-
 
             require_once(__DIR__ . '/../controleurs/bdd_connexion.php');
 
