@@ -3,21 +3,20 @@
 
     <div class="mt-4">
 
-        <form class="needs-validation" novalidate>
+        <form method="post" class="needs-validation" novalidate>
             <div class="form-floating has-validation mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="Adresse email" required>
+                <input type="email" class="form-control" id="floatingInput" placeholder="Adresse email" name="email" required>
                 <label for="floatingInput">Adresse email</label>
                 <div class="invalid-feedback">
                     Merci de rentrer une adresse mail valide
                 </div>
             </div>
             <div class="form-floating has-validation">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Mot de passe" required>
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Mot de passe" name="password" required>
                 <label for="floatingPassword">Mot de passe</label>
             </div>
             <div class="text-center">
-                <!--                <button class="btn btn-success btn-lg mt-4"  type="submit">Connexion</button>-->
-                <a class="btn btn-success btn-lg mt-4" href="/controleurs/add_administrator.php" role="button">Connexion</a>
+                    <button class="btn btn-success btn-lg mt-4"  type="submit">Connexion</button>
             </div>
         </form>
 

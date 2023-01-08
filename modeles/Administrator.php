@@ -212,7 +212,7 @@ class Administrator
                 if($nbAdministrators>$nbParPage){
                         echo '
                         <nav aria-label="Page navigation mt-4 bg-dark">
-                          <ul class="pagination justify-content-center mt-4">
+                          <ul class="pagination bg-succes justify-content-center mt-4">
                              <li class="page-item ';if($currentpage == 1){echo'disabled';} else{"";};echo'"><a class="page-link" href="administrators_listing.php/?page='.($currentpage-1).'">Precédente</a></li>';
                         for($page=1;$page<=$nbPages;$page++){
                             echo'<li class="page-item ';if($currentpage==$page){echo'active';}else{"";};echo'"><a class="page-link" href="administrators_listing.php/?page='.$page.'">'.$page.'</a></li>';
@@ -239,7 +239,7 @@ class Administrator
             }
         }
 
-    public function removeAdministrator(int $administratorId)
+    public function removeAdministrator(int $administratorId): void
     {
         try {
 
@@ -261,4 +261,42 @@ class Administrator
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
     }
+
+    public function connectAdministrator(): void
+    {
+        try {
+
+
+            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+            session_start();
+            if(isset($_POST['email']))
+            {
+                $email = stripslashes($_POST['email']);
+                $password = stripslashes($_POST['password']);
+                $sql='SELECT * FROM administrators WHERE email = :email';
+
+                $statement = $pdo->prepare($sql);
+                $statement->bindValue('email',$email, PDO::PARAM_STR);
+
+                if ($statement->execute()){
+                        $administrator1 = $statement->fetchObject('Administrator');
+                        if ($administrator1 == false){
+                            echo '<div class="alert alert-danger">Le nom d\'utilisateur est incorrect.</div>';
+                        } else {
+                            if (password_verify($password,$administrator1->getPassword())){
+                                $_SESSION['email'] = $administrator1->getEmail();
+                                $_SESSION['firstName'] = $administrator1->getFirstName();
+                                $_SESSION['lastName'] = $administrator1->getLastName();
+                                $_SESSION['password'] = $administrator1->getPassword();
+                                header('Location: profile.php');
+                            } else {echo '<div class="alert alert-danger">Le nom d\'utilisateur ou le mot de passe est incorrect.</div>';}
+                        }
+                    }
+                }
+
+        } catch (PDOException $e) {
+        echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 <?php
-include_once (__DIR__.'/vues/front_header.html');
+session_start();
+
+include_once (__DIR__ . '/vues/front_header.php');
 include_once (__DIR__ . '/vues/mission_listing_table_header.html');
 
 include_once (__DIR__.'/modeles/Mission.php');
