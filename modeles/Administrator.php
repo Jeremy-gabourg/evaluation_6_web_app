@@ -171,7 +171,7 @@ class Administrator
             $nbPages = ceil($nbAdministrators/$nbParPage);
             $start = ($currentpage*$nbParPage)-$nbParPage;
 
-            $sql2 = 'SELECT * FROM administrators ORDER BY last_name ASC  LIMIT :start, :nbParPage';
+            $sql2 = 'SELECT * FROM administrators ORDER BY last_name, first_name ASC  LIMIT :start, :nbParPage';
             $statement2 = $pdo->prepare($sql2);
 
             $statement2->bindParam('start', $start, PDO::PARAM_INT);

@@ -3,32 +3,38 @@
 class FieldPersonStatus
 {
     private int $id;
-    private string $statusName;
+    private string $name;
 
-    public function __construct(int $id, string $statusName)
-    {
-        $this->id = $id;
-        $this->statusName = $statusName;
-    }
-
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    public function getStatusName(): string
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
-        return $this->statusName;
+        return $this->name;
     }
 
-    public function setStatusName(string $statusName): void
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
-        $this->statusName = $statusName;
+        $this->name = $name;
     }
 
 

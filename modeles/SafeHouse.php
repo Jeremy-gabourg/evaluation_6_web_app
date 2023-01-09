@@ -4,79 +4,105 @@ class SafeHouse
 {
     private int $id;
     private string $address;
-    private string $safeHouseType;
-    private bool $isAvailable;
-    private int $countryId;
-    private int $missionId;
+    private string $type;
+    private bool $is_available;
+    private int $mission;
+    private int $country;
 
-    public function __construct(int $id, string $address, string $safeHouseType, bool $isAvailable, int $countryId, int $missionId)
-    {
-        $this->id = $id;
-        $this->address = $address;
-        $this->safeHouseType = $safeHouseType;
-        $this->isAvailable = $isAvailable;
-        $this->countryId = $countryId;
-        $this->missionId = $missionId;
-    }
-
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getAddress(): string
     {
         return $this->address;
     }
 
+    /**
+     * @param string $address
+     */
     public function setAddress(string $address): void
     {
         $this->address = $address;
     }
 
-    public function getSafeHouseType(): string
+    /**
+     * @return string
+     */
+    public function getType(): string
     {
-        return $this->safeHouseType;
+        return $this->type;
     }
 
-    public function setSafeHouseType(string $safeHouseType): void
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
     {
-        $this->safeHouseType = $safeHouseType;
+        $this->type = $type;
     }
 
-    public function isAvailable(): bool
+    /**
+     * @return bool
+     */
+    public function isIsAvailable(): bool
     {
-        return $this->isAvailable;
+        return $this->is_available;
     }
 
-    public function setIsAvailable(bool $isAvailable): void
+    /**
+     * @param bool $is_available
+     */
+    public function setIsAvailable(bool $is_available): void
     {
-        $this->isAvailable = $isAvailable;
+        $this->is_available = $is_available;
     }
 
-    public function getCountryId(): int
+    /**
+     * @return int
+     */
+    public function getMission(): int
     {
-        return $this->countryId;
+        return $this->mission;
     }
 
-    public function setCountryId(int $countryId): void
+    /**
+     * @param int $mission
+     */
+    public function setMission(int $mission): void
     {
-        $this->countryId = $countryId;
+        $this->mission = $mission;
     }
 
-    public function getMissionId(): int
+    /**
+     * @return int
+     */
+    public function getCountry(): int
     {
-        return $this->missionId;
+        return $this->country;
     }
 
-    public function setMissionId(int $missionId): void
+    /**
+     * @param int $country
+     */
+    public function setCountry(int $country): void
     {
-        $this->missionId = $missionId;
+        $this->country = $country;
     }
 
 
