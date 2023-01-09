@@ -2,7 +2,7 @@
 echo '
 <main class="text-success col">
     <h1 class="my-4 text-center">Mon profil</h1>
-    <form id="modifyMyProfile" novalidate method="post" action="/controleurs/modify_profile.php">
+    <form id="modifyMyProfile" novalidate method="post" action="/controleurs/profile.php">
 
         <div class="container pt-4">
             <div class="form-floating mb-3 mt-4">

@@ -212,7 +212,7 @@ class Administrator
                 if($nbAdministrators>$nbParPage){
                         echo '
                         <nav aria-label="Page navigation mt-4 bg-dark">
-                          <ul class="pagination bg-succes justify-content-center mt-4">
+                          <ul class="pagination justify-content-center mt-4">
                              <li class="page-item ';if($currentpage == 1){echo'disabled';} else{"";};echo'"><a class="page-link" href="administrators_listing.php/?page='.($currentpage-1).'">Precédente</a></li>';
                         for($page=1;$page<=$nbPages;$page++){
                             echo'<li class="page-item ';if($currentpage==$page){echo'active';}else{"";};echo'"><a class="page-link" href="administrators_listing.php/?page='.$page.'">'.$page.'</a></li>';
@@ -245,7 +245,7 @@ class Administrator
 
             include (__DIR__.'/../controleurs/bdd_connexion.php');
 
-            $sql2='DELETE FROM administrators WHERE id=:id';
+            $sql2='DELETE FROM administrators WHERE id = :id';
             $statement = $pdo->prepare($sql2);
 
             $statement->bindParam('id', $administratorId, PDO::PARAM_INT);
@@ -289,6 +289,7 @@ class Administrator
                                 $_SESSION['firstName'] = $administrator1->getFirstName();
                                 $_SESSION['lastName'] = $administrator1->getLastName();
                                 $_SESSION['password'] = $administrator1->getPassword();
+                                $_SESSION['creationDate'] = $administrator1->getCreationDate();
                                 $_SESSION['connected'] = true;
                                 header('Location: profile.php');
                             } else {echo '<div class="alert alert-danger">Le nom d\'utilisateur ou le mot de passe est incorrect.</div>';}
@@ -301,59 +302,66 @@ class Administrator
         }
     }
 
-    public function modifyProfile () {
+    public function modifyProfile (): void
+    {
 
         try {
 
-        $id = $_SESSION['administratorId'];
-
-        require_once (__DIR__.'/../controleurs/bdd_connexion.php');
-
-        $sql = 'SELECT * FROM administrators WHERE id=:id';
-        $statement = $pdo->prepare($sql);
-        $statement->bindParam('id', $id, PDO::PARAM_INT);
-
-        if($statement->execute()){
-            while($administrator = $statement->fetchObject('Administrator')) {
-
-                $this->setLastName(strtoupper(strtolower($_POST['lastName'])));
-                $this->setFirstName(ucfirst(strtolower($_POST['firstName'])));
+            if($_POST['firstName'] !== null && $_POST['lastName'] !== null && $_POST['email'] !== null && $_POST['password'] !== null) {
+                $this->setLastName($_POST['lastName']);
+                $this->setFirstName($_POST['firstName']);
                 $this->setEmail($_POST['email']);
-                $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
-                $this->setPassword($hashedPassword);
+                $id = $_SESSION['administratorId'];
+                $this->setId($id);
+                $this->setCreationDate($_SESSION['creationDate']);
 
-                $id1 = $administrator->getId();
-                $sql1 = 'UPDATE administrators SET first_name=:fisrt_name, last_name=:last_name, email=:email, password=:password WHERE id = :id';
+                if (strlen($_POST['password'])<50) {
+                    $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
+                    $this->setPassword($hashedPassword);
+                } else {
+                    $this->setPassword($_POST['password']);
+                }
+
+                include (__DIR__.'/../controleurs/bdd_connexion.php');
+
+                $sql1 = 'UPDATE administrators SET first_name = :fisrt_name, last_name = :last_name, email = :email, password = :password WHERE id = :id';
+
                 $statement1 = $pdo->prepare($sql1);
+
                 $statement1->bindParam('first_name', $this->first_name, PDO::PARAM_STR);
                 $statement1->bindParam('last_name', $this->last_name, PDO::PARAM_STR);
                 $statement1->bindParam('email', $this->email, PDO::PARAM_STR);
                 $statement1->bindParam('password', $this->password, PDO::PARAM_STR);
-                $statement1->bindParam('id', $id1, PDO::PARAM_INT);
+                $statement1->bindParam('id', $this->id, PDO::PARAM_INT);
+                var_dump($this);
 
                 if ($statement1->execute()){
                     echo '
-                <div class="alert alert-success mt-4" role="alert">
-                  L\'administrateur a été modifié avec succès!
-                </div>';
+                        <div class="alert alert-success mt-4" role="alert">
+                          L\'administrateur a été modifié avec succès!
+                        </div>';
                     $_SESSION['email'] = $this->email;
                     $_SESSION['firstName'] = $this->first_name;
                     $_SESSION['lastName'] = $this->last_name;
                     $_SESSION['password'] = $this->password;
-                header('Location: /controleurs/profile.php');
                 } else {
                     echo '
-                <div class="alert alert-danger mt-4" role="alert">
-                  Impossible de modifier l\'administrateur !
-                </div>';
-                }   echo '
+                        <div class="alert alert-danger mt-4" role="alert">
+                          Impossible de modifier l\'administrateur !
+                        </div>';
+                }
+
+            } else {
+                echo '
+                        <div class="alert alert-danger mt-4" role="alert">
+                          Merci de ne laisser aucun champs vide svp !
+                        </div>';
+            }
+            echo '
                 </main>
                 </div>
                 </body>
                 </html>';
-
-                }
-            }
         } catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
