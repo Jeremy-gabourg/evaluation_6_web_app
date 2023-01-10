@@ -1,24 +1,30 @@
 <script src="../assets/js/script.js"></script>
 
-<main class="col">
+<main class="text-success col">
 
     <h1 class="text-success text-center py-4 my-4">Ajouter un administrateur</h1>
 
     <form id="addAdministrator" novalidate method="post" action="/controleurs/add_administrator.php">
 
         <div class="container pt-4">
-            <div class="form-floating mb-3 mt-4">
-                <input type="text" class="form-control" id="floatingInput1" placeholder="Prénom" name="firstName">
-                <label for="floatingInput1">Prénom</label>
-                <div class="invalid-feedback">
-                    Merci de rentrer un nom svp
+            <div class="row">
+                <div class="col-12 col-md">
+                    <div class="form-floating mt-4">
+                        <input type="text" class="form-control" id="floatingInput1" placeholder="Prénom" name="firstName">
+                        <label for="floatingInput1">Prénom</label>
+                        <div class="invalid-feedback">
+                            Merci de rentrer un nom svp
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-floating mt-4">
-                <input type="text" class="form-control" id="floatingInput2" placeholder="Nom" name="lastName">
-                <label for="floatingInput2">Nom</label>
-                <div class="invalid-feedback">
-                    Merci de rentrer un prénom svp
+                <div class="col-12 col-md">
+                    <div class="form-floating mt-4">
+                        <input type="text" class="form-control" id="floatingInput2" placeholder="Nom" name="lastName">
+                        <label for="floatingInput2">Nom</label>
+                        <div class="invalid-feedback">
+                            Merci de rentrer un prénom svp
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-floating mt-5">

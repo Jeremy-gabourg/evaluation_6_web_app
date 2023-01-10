@@ -1,0 +1,44 @@
+<script src="../assets/js/script.js"></script>
+
+<main class="text-success col">
+
+    <h1 class="text-success text-center py-4 my-4">Ajouter un pays</h1>
+
+    <form id="addAdministrator" novalidate method="post" action="/controleurs/add_country.php">
+
+        <div class="container pt-4">
+            <div class="form-floating mb-3 mt-4">
+                <input type="text" class="form-control" id="floatingInput1" placeholder="Nom Français" name="frenchName">
+                <label for="floatingInput1">Nom français</label>
+                <div class="invalid-feedback">
+                    Merci de rentrer un nom svp
+                </div>
+            </div>
+            <div class="form-floating mt-4">
+                <input type="text" class="form-control" id="floatingInput2" placeholder="Nom Anglais" name="englishName">
+                <label for="floatingInput2">Nom Anglais</label>
+                <div class="invalid-feedback">
+                    Merci de rentrer un nom svp
+                </div>
+            </div>
+            <div class="form-floating mt-5">
+                <input type="number" class="form-control" id="floatingNumber" placeholder="Code" name="countryCode">
+                <label for="floatingNumber">Code</label>
+                <div class="invalid-feedback">
+                    Merci de rentrer un code valide svp
+                </div>
+            </div>
+            <div class="form-floating mt-5">
+                <input type="text" class="form-control" id="floatingInput3" placeholder="Code Alpha 2 caractères" name="alphaCode2">
+                <label for="floatingInput3">Code Alpha 2 caractères</label>
+            </div>
+            <div class="form-floating mt-5">
+                <input type="text" class="form-control" id="floatingInput4" placeholder="Code Alpha 3 caractères" name="alphaCode3">
+                <label for="floatingInput4">Code Alpha 3 caractères</label>
+            </div>
+            <div class="mt-4 text-center">
+                <button class="btn btn-success btn-lg" type="submit">Ajouter</button>
+            </div>
+        </div>
+
+    </form>

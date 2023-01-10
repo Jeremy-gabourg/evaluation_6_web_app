@@ -3,20 +3,25 @@ echo '
 <main class="text-success col">
     <h1 class="my-4 text-center">Mon profil</h1>
     <form id="modifyMyProfile" novalidate method="post" action="/controleurs/profile.php">
-
         <div class="container pt-4">
-            <div class="form-floating mb-3 mt-4">
-                <input type="text" class="form-control" id="floatingInput1" placeholder="Prénom" name="firstName" value="'.$_SESSION['firstName'].'">
-                <label for="floatingInput1">Prénom</label>
-                <div class="invalid-feedback">
-                    Merci de rentrer un nom svp
+            <div class="row">
+                <div class="col-12 col-md">
+                    <div class="form-floating mt-4">
+                        <input type="text" class="form-control" id="floatingInput1" placeholder="Prénom" name="firstName" value="'.$_SESSION['firstName'].'">
+                        <label for="floatingInput1">Prénom</label>
+                        <div class="invalid-feedback">
+                            Merci de rentrer un nom svp
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-floating mt-4">
-                <input type="text" class="form-control" id="floatingInput2" placeholder="Nom" name="lastName" value="'.$_SESSION['lastName'].'">
-                <label for="floatingInput2">Nom</label>
-                <div class="invalid-feedback">
-                    Merci de rentrer un prénom svp
+                <div class="col-12 col-md">
+                    <div class="form-floating mt-4">
+                        <input type="text" class="form-control" id="floatingInput2" placeholder="Nom" name="lastName" value="'.$_SESSION['lastName'].'">
+                        <label for="floatingInput2">Nom</label>
+                        <div class="invalid-feedback">
+                            Merci de rentrer un prénom svp
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-floating mt-5">

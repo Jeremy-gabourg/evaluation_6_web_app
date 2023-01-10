@@ -323,18 +323,21 @@ class Administrator
                 }
 
                 include (__DIR__.'/../controleurs/bdd_connexion.php');
-
                 $sql1 = 'UPDATE administrators SET first_name = :fisrt_name, last_name = :last_name, email = :email, password = :password WHERE id = :id';
 
                 $statement1 = $pdo->prepare($sql1);
 
-                $statement1->bindParam('first_name', $this->first_name, PDO::PARAM_STR);
-                $statement1->bindParam('last_name', $this->last_name, PDO::PARAM_STR);
-                $statement1->bindParam('email', $this->email, PDO::PARAM_STR);
-                $statement1->bindParam('password', $this->password, PDO::PARAM_STR);
-                $statement1->bindParam('id', $this->id, PDO::PARAM_INT);
-                var_dump($this);
+                $firstName = $this->getFirstName();
+                $lastName = $this->getLastName();
+                $email = $this->getEmail();
+                $password = $this->getPassword();
 
+                $statement1->bindParam('first_name', $firstName, PDO::PARAM_STR);
+                $statement1->bindParam('last_name', $lastName, PDO::PARAM_STR);
+                $statement1->bindParam('email', $email, PDO::PARAM_STR);
+                $statement1->bindParam('password', $password, PDO::PARAM_STR);
+                $statement1->bindParam('id', $id, PDO::PARAM_INT);
+                var_dump($this);
                 if ($statement1->execute()){
                     echo '
                         <div class="alert alert-success mt-4" role="alert">
