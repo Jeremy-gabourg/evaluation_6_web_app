@@ -108,46 +108,50 @@ class Administrator
 
     public function addAdministrator(): void
     {
-        $this->setLastName($_POST['lastName']);
-        $this->setFirstName($_POST['firstName']);
-        $this->setEmail($_POST['email']);
+        if ($_POST['lastName']!=="" && $_POST['firstName']!=="" && $_POST['email']!=="" && $_POST['password']!=="") {
+            $this->setLastName($_POST['lastName']);
+            $this->setFirstName($_POST['firstName']);
+            $this->setEmail($_POST['email']);
 
-        $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $this->setPassword($hashedPassword);
+            $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
+            $this->setPassword($hashedPassword);
 
-        $today = date("Y-m-d");
-        $this->setCreationDate($today);
+            $today = date("Y-m-d");
+            $this->setCreationDate($today);
 
-        try {
+            try {
 
-            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+                require_once (__DIR__.'/../controleurs/bdd_connexion.php');
 
-            $sql = 'INSERT INTO administrators(first_name, last_name, email, password, creation_date) VALUES (:first_name, :last_name, :email, :password, :creation_date)';
-            $statement = $pdo->prepare($sql);
-            $statement->bindParam('first_name', $this->first_name, PDO::PARAM_STR);
-            $statement->bindParam('last_name', $this->last_name, PDO::PARAM_STR);
-            $statement->bindParam('email', $this->email, PDO::PARAM_STR);
-            $statement->bindParam('password', $this->password, PDO::PARAM_STR);
-            $statement->bindParam('creation_date', $this->creation_date, PDO::PARAM_STR);
+                $sql = 'INSERT INTO administrators(first_name, last_name, email, password, creation_date) VALUES (:first_name, :last_name, :email, :password, :creation_date)';
+                $statement = $pdo->prepare($sql);
+                $statement->bindParam('first_name', $this->first_name, PDO::PARAM_STR);
+                $statement->bindParam('last_name', $this->last_name, PDO::PARAM_STR);
+                $statement->bindParam('email', $this->email, PDO::PARAM_STR);
+                $statement->bindParam('password', $this->password, PDO::PARAM_STR);
+                $statement->bindParam('creation_date', $this->creation_date, PDO::PARAM_STR);
 
-            if ($statement->execute()){
-                echo '
+                if ($statement->execute()){
+                    echo '
                 <div class="alert alert-success mt-4" role="alert">
                   L\'administrateur a été créé avec succès!
                 </div>';
-            } else {
-                echo '
+                } else {
+                    echo '
                 <div class="alert alert-danger mt-4" role="alert">
                   Impossible de créer l\'administrateur !
                 </div>';
-            }   echo '
+                }   echo '
             </main>
             </div>
             </body>
             </html>';
 
-        } catch (PDOException $e) {
-            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            } catch (PDOException $e) {
+                echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            }
+        } else {
+            echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
         }
     }
 

@@ -138,13 +138,15 @@ class Country
                                                 <td>'.$country->getAlpha3Code().'</td>
                                                 <td>'.$country->getCountryCode().'</td>
                                                 <td class="text-end">
-                                                    <form method="post">
+                                                    <form method="post" action="/controleurs/modify_country.php" class="d-inline-block">
                                                         <button type="submit" class="btn btn-warning" name="modifybutton" value="'.$country->getId().'">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                                             </svg>                                                            
                                                             <span class="d-none d-md-inline ps-1">Modifier</span>                                              
                                                         </button>
+                                                        </form>
+                                                        <form method="post" class="d-inline-block">
                                                         <button type="submit" class="btn btn-danger" name="suppressionbutton" value="'.$country->getId().'">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
@@ -224,14 +226,16 @@ class Country
 
     public function addCountry(): void
     {
-        $this->setFrenchName($_POST['frenchName']);
-        $this->setEnglishName($_POST['englishName']);
-        $this->setCountryCode($_POST['countryCode']);
-        $this->setAlpha2Code($_POST['alphaCode2']);
-        $this->setAlpha3Code($_POST['alphaCode3']);
+        if ($_POST['frenchName']!=="" && $_POST['englishName']!=="" && $_POST['countryCode']!=="" && $_POST['alphaCode2']!=="" && $_POST['alphaCode3']!=="") {
 
-        try {
-            if ($this->alpha3_code!=="" && $this->alpha2_code!=="" && $this->country_code!=="" && $this->english_name!=="" && $this->french_name!=="") {
+            try {
+
+                $this->setFrenchName($_POST['frenchName']);
+                $this->setEnglishName($_POST['englishName']);
+                $this->setCountryCode($_POST['countryCode']);
+                $this->setAlpha2Code($_POST['alphaCode2']);
+                $this->setAlpha3Code($_POST['alphaCode3']);
+
                 require_once (__DIR__.'/../controleurs/bdd_connexion.php');
 
                 $sql = 'INSERT INTO countries(french_name, english_name, country_code, alpha2_code, alpha3_code) VALUES (:french_name, :english_name, :country_code, :alpha2_code, :alpha3_code)';
@@ -253,16 +257,78 @@ class Country
                   Impossible de créer le pays !
                 </div>';
                 }
-            } else {
-                echo '<div class="alert alert-danger">Merci de ne laisser aucun champs vide</div>';
+
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+
+                } catch (PDOException $e) {
+                echo 'Une erreur s\'est produite lors de la communication avec la base de données';
             }
+        } else {
+        echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
+        }
+    }
 
+    public function displaySelectedCountry(int $countryId): void
+    {
+        try {
+            $sql = 'SELECT * FROM countries WHERE id=:id';
+
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $statement=$pdo->prepare($sql);
+            $statement->bindParam('id', $countryId, PDO::PARAM_INT);
+            if($statement->execute()) {
+                while ($country = $statement->fetchObject('Country')) {
+                    require_once (__DIR__.'/../vues/back_template.html');
+                    require_once (__DIR__ . '/../vues/modify_country_form.php');
+                    $_SESSION['countryId'] = $countryId;
+                }
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
+    public function modifyCountry($countryId): void
+    {
+        try {
+            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+
+            $this->setId($countryId);
+            $this->setCountryCode($_POST['countryCode']);
+            $this->setEnglishName($_POST['englishName']);
+            $this->setFrenchName($_POST['frenchName']);
+            $this->setAlpha2Code($_POST['alphaCode2']);
+            $this->setAlpha3Code($_POST['alphaCode3']);
+
+            $sql='UPDATE countries SET country_code=:country_code, alpha2_code=:alpha2_code, alpha3_code=:alpha3_code, english_name=:english_name, french_name=:french_name WHERE id=:id';
+            $statement = $pdo->prepare($sql);
+            $statement->bindValue('country_code', $this->country_code, PDO::PARAM_INT);
+            $statement->bindValue('alpha2_code', $this->alpha2_code, PDO::PARAM_STR);
+            $statement->bindValue('alpha3_code', $this->alpha3_code, PDO::PARAM_STR);
+            $statement->bindValue('english_name', $this->english_name, PDO::PARAM_STR);
+            $statement->bindValue('french_name', $this->french_name, PDO::PARAM_STR);
+            $statement->bindValue('id', $this->id, PDO::PARAM_INT);
+
+            if($statement->execute()){
+                $country=$this;
+                require_once (__DIR__.'/../vues/modify_country_form.php');
+                echo '<div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
+            } else {
+                echo '<div class="alert alert-danger mt-4">Problème lors de l\'enregistrement des données</div>';
+            }
             echo '
-            </main>
-            </div>
-            </body>
-            </html>';
-
+                </main>
+                </body>
+                </html>';
         } catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
