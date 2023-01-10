@@ -252,7 +252,7 @@ class FieldPerson
                             </table>
                             </div>
                             <div class="text-center mt-4">
-                                <a role="button" class="btn btn-success" href="/controleurs/add_field_persons.php">
+                                <a role="button" class="btn btn-success" href="/controleurs/add_field_person.php">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -294,9 +294,9 @@ class FieldPerson
                         </html>
                         ';
                         } else {
-                            echo '</main>
-                          </body>
-                          </html>';
+                        echo '</main>
+                              </body>
+                              </html>';
                         }
 
             }
@@ -332,4 +332,54 @@ class FieldPerson
         }
     }
 
+    public function displayForm() {
+        try {
+            require_once (__DIR__.'/FieldPersonStatus.php');
+            require_once (__DIR__.'/FieldPersonType.php');
+            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+
+            $sql1 = 'SELECT COUNT(*) AS nb_field_persons_status FROM field_persons_status';
+            $statement1 = $pdo->prepare($sql1);
+            $statement1->execute();
+            $result = $statement1->fetch();
+            $nbFieldPersonStatus = $result['nb_field_persons_status'];
+
+            $sql4 = 'SELECT COUNT(*) AS nb_field_persons_types FROM field_persons_types';
+            $statement4 = $pdo->prepare($sql4);
+            $statement4->execute();
+            $result = $statement4->fetch();
+            $nbFieldPersonTypes = $result['nb_field_persons_types'];
+
+            $sql = 'SELECT * FROM field_persons_status';
+            $statement = $pdo->prepare($sql);
+            if ($statement->execute()) {
+                while ($fieldPersonStatus = $statement->fetchObject('FieldPersonStatus')){
+                    var_dump($fieldPersonStatus);
+                    $sql2='SELECT * FROM field_persons_types';
+                    $statement2 = $pdo->prepare($sql2);
+                    if ($statement2->execute()) {
+                        while ($fieldPersonType = $statement2->fetchObject('FieldPersonType')){
+                            require_once (__DIR__ . '/../vues/add_person_field_form.php');
+                            echo '</main>
+                          </body>
+                          </html>';
+                        }
+                    }
+
+                }
+                var_dump($fieldPersonStatus);
+            }
+
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+    public function addFieldPerson(): void
+    {
+        try {
+
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
 }
