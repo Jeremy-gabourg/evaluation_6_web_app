@@ -292,8 +292,6 @@ class Administrator
                                 $_SESSION['email'] = $administrator1->getEmail();
                                 $_SESSION['firstName'] = $administrator1->getFirstName();
                                 $_SESSION['lastName'] = $administrator1->getLastName();
-                                $_SESSION['password'] = $administrator1->getPassword();
-                                $_SESSION['creationDate'] = $administrator1->getCreationDate();
                                 $_SESSION['connected'] = true;
                                 header('Location: profile.php');
                             } else {echo '<div class="alert alert-danger">Le nom d\'utilisateur ou le mot de passe est incorrect.</div>';}
@@ -306,51 +304,64 @@ class Administrator
         }
     }
 
-    public function modifyProfile (): void
+    public function displayMyProfile($administratorId): void
+    {
+        try {
+            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+            $sql = 'SELECT * FROM administrators WHERE id=:id';
+            $statement=$pdo->prepare($sql);
+            $statement->bindValue('id', $administratorId, PDO::PARAM_INT);
+            if ($statement->execute()) {
+                while ($administrator = $statement->fetchObject('Administrator')) {
+                    require_once (__DIR__.'/../vues/back_template.html');
+                    require_once (__DIR__.'/../vues/profile_page.php');
+                }
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+    public function modifyProfile ($administratorId): void
     {
 
         try {
 
-            if($_POST['firstName'] !== null && $_POST['lastName'] !== null && $_POST['email'] !== null && $_POST['password'] !== null) {
-                $this->setLastName($_POST['lastName']);
-                $this->setFirstName($_POST['firstName']);
-                $this->setEmail($_POST['email']);
-                $id = $_SESSION['administratorId'];
-                $this->setId($id);
-                $this->setCreationDate($_SESSION['creationDate']);
+            $this->setId($administratorId);
+            $this->setEmail($_POST['email']);
+            $this->setCreationDate($_SESSION['creationDate']);
+            $this->setFirstName($_POST['firstName']);
+            $this->setLastName($_POST['lastName']);
 
                 if (strlen($_POST['password'])<50) {
-                    $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
-                    $this->setPassword($hashedPassword);
+                    $this->password = password_hash($_POST['password'], PASSWORD_BCRYPT);
                 } else {
-                    $this->setPassword($_POST['password']);
+                    $this->password = ($_POST['password']);
                 }
 
+                $sql1 = 'UPDATE administrators SET first_name = :first_name, last_name = :last_name, email = :email, password = :password WHERE id = :id';
+
                 include (__DIR__.'/../controleurs/bdd_connexion.php');
-                $sql1 = 'UPDATE administrators SET first_name = :fisrt_name, last_name = :last_name, email = :email, password = :password WHERE id = :id';
 
                 $statement1 = $pdo->prepare($sql1);
 
-                $firstName = $this->getFirstName();
-                $lastName = $this->getLastName();
-                $email = $this->getEmail();
-                $password = $this->getPassword();
-
-                $statement1->bindParam('first_name', $firstName, PDO::PARAM_STR);
-                $statement1->bindParam('last_name', $lastName, PDO::PARAM_STR);
-                $statement1->bindParam('email', $email, PDO::PARAM_STR);
-                $statement1->bindParam('password', $password, PDO::PARAM_STR);
-                $statement1->bindParam('id', $id, PDO::PARAM_INT);
-                var_dump($this);
+                $statement1->bindValue('first_name', $this->first_name, PDO::PARAM_STR);
+                $statement1->bindValue('last_name', $this->last_name, PDO::PARAM_STR);
+                $statement1->bindValue('email', $this->email, PDO::PARAM_STR);
+                $statement1->bindValue('password', $this->password, PDO::PARAM_STR);
+                $statement1->bindValue('id', $this->id, PDO::PARAM_INT);
                 if ($statement1->execute()){
-                    echo '
-                        <div class="alert alert-success mt-4" role="alert">
-                          L\'administrateur a été modifié avec succès!
-                        </div>';
                     $_SESSION['email'] = $this->email;
                     $_SESSION['firstName'] = $this->first_name;
                     $_SESSION['lastName'] = $this->last_name;
                     $_SESSION['password'] = $this->password;
+                    $administrator = $this;
+                    require_once (__DIR__.'/../vues/back_template.html');
+                    require_once (__DIR__.'/../vues/profile_page.php');
+                    echo '
+                        <div class="alert alert-success mt-4">Modifications enregistrées avec succès!</div>
+                        </main>
+                        </body>
+                        </html>';
                 } else {
                     echo '
                         <div class="alert alert-danger mt-4" role="alert">
@@ -358,17 +369,11 @@ class Administrator
                         </div>';
                 }
 
-            } else {
-                echo '
-                        <div class="alert alert-danger mt-4" role="alert">
-                          Merci de ne laisser aucun champs vide svp !
-                        </div>';
-            }
             echo '
-                </main>
                 </div>
                 </body>
                 </html>';
+
         } catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }

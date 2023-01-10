@@ -7,7 +7,7 @@ echo '
             <div class="row">
                 <div class="col-12 col-md">
                     <div class="form-floating mt-4">
-                        <input type="text" class="form-control" id="floatingInput1" placeholder="Prénom" name="firstName" value="'.$_SESSION['firstName'].'">
+                        <input type="text" class="form-control" id="floatingInput1" placeholder="Prénom" name="firstName" value="'.$administrator->getFirstName().'">
                         <label for="floatingInput1">Prénom</label>
                         <div class="invalid-feedback">
                             Merci de rentrer un nom svp
@@ -16,7 +16,7 @@ echo '
                 </div>
                 <div class="col-12 col-md">
                     <div class="form-floating mt-4">
-                        <input type="text" class="form-control" id="floatingInput2" placeholder="Nom" name="lastName" value="'.$_SESSION['lastName'].'">
+                        <input type="text" class="form-control" id="floatingInput2" placeholder="Nom" name="lastName" value="'.$administrator->getLastName().'">
                         <label for="floatingInput2">Nom</label>
                         <div class="invalid-feedback">
                             Merci de rentrer un prénom svp
@@ -25,14 +25,14 @@ echo '
                 </div>
             </div>
             <div class="form-floating mt-5">
-                <input type="email" class="form-control" id="floatingEmail" placeholder="Adresse mail" name="email" value="'.$_SESSION['email'].'">
+                <input type="email" class="form-control" id="floatingEmail" placeholder="Adresse mail" name="email" value="'.$administrator->getEmail().'">
                 <label for="floatingEmail">Adresse mail</label>
                 <div class="invalid-feedback">
                     Merci de rentrer une adresse mail valide svp
                 </div>
             </div>
             <div class="form-floating mt-5">
-                <input type="password" class="form-control" id="floatingPassword1" placeholder="Mot de passe" name="password" value="'.$_SESSION['password'].'">
+                <input type="password" class="form-control" id="floatingPassword1" placeholder="Mot de passe" name="password" value="'.$administrator->getPassword().'">
                 <label for="floatingPassword1">Mot de passe</label>
             </div>
             <div class="mt-4 text-center">
@@ -41,7 +41,6 @@ echo '
         </div>
 
     </form>    
-</main>
 ';
 
 
