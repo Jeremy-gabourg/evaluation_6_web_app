@@ -43,7 +43,8 @@ class FieldPersonStatus
 
         echo '
                 <div class="form-floating mt-5">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="status">
+                <select class="form-select" id="floatingSelect1" aria-label="Floating label select example" name="status">
+                    <option selected>Choisissez un statut</option>
                 ';
 
         try {
@@ -61,7 +62,7 @@ class FieldPersonStatus
 
         echo '
                 </select>
-                <label for="floatingSelect">Status</label>
+                <label for="floatingSelect1">Status</label>
               </div>
                 ';
 

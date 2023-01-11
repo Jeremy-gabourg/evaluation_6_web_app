@@ -43,7 +43,9 @@ class FieldPersonType
 
             echo '
                 <div class="form-floating mt-5">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="types">
+                <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
+                    <option selected>Choisissez un type</option>
+
                 ';
 
             include (__DIR__.'/../controleurs/bdd_connexion.php');
@@ -56,7 +58,7 @@ class FieldPersonType
             }
             echo '
                 </select>
-                <label for="floatingSelect">Types</label>
+                <label for="floatingSelect2">Types</label>
               </div>
                 ';
 

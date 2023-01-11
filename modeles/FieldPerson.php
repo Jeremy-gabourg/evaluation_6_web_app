@@ -361,11 +361,13 @@ class FieldPerson
     }
     public function addFieldPerson(): void
     {
-        if ($_POST['birthDate']!=="" && $_POST['codeNameOrIdentificationCode']!=="" && $_POST['status']!=="" && $_POST['types']!=="" && $_POST['placeOfBirth']!=="") {
+        if ($_POST['firstName']!=="" && $_POST['lastName']!=="" && $_POST['birthDate']!=="" && $_POST['codeNameOrIdentificationCode']!=="" && $_POST['status']!=="" && $_POST['types']!=="" && $_POST['placeOfBirth']!=="") {
 
             $this->setId($this->guidv4());
-            $date = date_format(strtotime($_POST['birthDate']), 'Y-m-d');
-            $this->setBirthDate($date);
+            $dateOfBirth = date('Y-m-d',strtotime($_POST['birthDate']));
+            $this->setFirstName($_POST['firstName']);
+            $this->setLastName($_POST['lastName']);
+            $this->setBirthDate($dateOfBirth);
             $this->setCodeNameOrIdentification($_POST['codeNameOrIdentificationCode']);
             $this->setStatus($_POST['status']);
             $this->setType($_POST['types']);
@@ -373,6 +375,8 @@ class FieldPerson
             try {
 
                 include (__DIR__.'/../controleurs/bdd_connexion.php');
+                require_once (__DIR__.'/Country.php');
+
                 $sql = 'SELECT * FROM countries WHERE french_name=:french_name';
                 $statement = $pdo->prepare($sql);
                 $statement->bindValue('french_name', $_POST['placeOfBirth'], PDO::PARAM_STR);
