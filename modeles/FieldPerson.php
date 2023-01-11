@@ -44,7 +44,7 @@ class FieldPerson
      */
     public function setFirstName(string $first_name): void
     {
-        $this->first_name = $first_name;
+        $this->first_name = strtolower(ucfirst($first_name));
     }
 
     /**
@@ -60,7 +60,7 @@ class FieldPerson
      */
     public function setLastName(string $last_name): void
     {
-        $this->last_name = $last_name;
+        $this->last_name = strtolower(strtoupper($last_name));
     }
 
     /**
@@ -336,50 +336,87 @@ class FieldPerson
         try {
             require_once (__DIR__.'/FieldPersonStatus.php');
             require_once (__DIR__.'/FieldPersonType.php');
-            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+            require_once (__DIR__.'/Country.php');
 
-            $sql1 = 'SELECT COUNT(*) AS nb_field_persons_status FROM field_persons_status';
-            $statement1 = $pdo->prepare($sql1);
-            $statement1->execute();
-            $result = $statement1->fetch();
-            $nbFieldPersonStatus = $result['nb_field_persons_status'];
-
-            $sql4 = 'SELECT COUNT(*) AS nb_field_persons_types FROM field_persons_types';
-            $statement4 = $pdo->prepare($sql4);
-            $statement4->execute();
-            $result = $statement4->fetch();
-            $nbFieldPersonTypes = $result['nb_field_persons_types'];
-
-            $sql = 'SELECT * FROM field_persons_status';
-            $statement = $pdo->prepare($sql);
-            if ($statement->execute()) {
-                while ($fieldPersonStatus = $statement->fetchObject('FieldPersonStatus')){
-                    var_dump($fieldPersonStatus);
-                    $sql2='SELECT * FROM field_persons_types';
-                    $statement2 = $pdo->prepare($sql2);
-                    if ($statement2->execute()) {
-                        while ($fieldPersonType = $statement2->fetchObject('FieldPersonType')){
-                            require_once (__DIR__ . '/../vues/add_person_field_form.php');
-                            echo '</main>
-                          </body>
-                          </html>';
-                        }
-                    }
-
-                }
-                var_dump($fieldPersonStatus);
-            }
-
+            require_once (__DIR__ . '/../vues/add_person_field_form.php');
+            echo '</main>
+                  </body>
+                  </html>';
         } catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
     }
+    function guidv4($data = null) {
+        // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
+        $data = $data ?? random_bytes(16);
+        assert(strlen($data) == 16);
+
+        // Set version to 0100
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        // Set bits 6-7 to 10
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+        // Output the 36 character UUID.
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
     public function addFieldPerson(): void
     {
-        try {
+        if ($_POST['birthDate']!=="" && $_POST['codeNameOrIdentificationCode']!=="" && $_POST['status']!=="" && $_POST['types']!=="" && $_POST['placeOfBirth']!=="") {
 
-        } catch (PDOException $e) {
-            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            $this->setId($this->guidv4());
+            $date = date_format(strtotime($_POST['birthDate']), 'Y-m-d');
+            $this->setBirthDate($date);
+            $this->setCodeNameOrIdentification($_POST['codeNameOrIdentificationCode']);
+            $this->setStatus($_POST['status']);
+            $this->setType($_POST['types']);
+
+            try {
+
+                include (__DIR__.'/../controleurs/bdd_connexion.php');
+                $sql = 'SELECT * FROM countries WHERE french_name=:french_name';
+                $statement = $pdo->prepare($sql);
+                $statement->bindValue('french_name', $_POST['placeOfBirth'], PDO::PARAM_STR);
+
+                if($statement->execute()) {
+                    $placeOfBirth = $statement->fetchObject('Country');
+                    $this->setCountryOfBirth($placeOfBirth->getId());
+
+                    $sql1 = 'INSERT INTO field_persons(id, first_name, last_name, birth_date, code_name_or_identification, status, type, country_of_birth) VALUES (:id, :first_name, :last_name, :birth_date, :code_name_or_identification, :status, :type, :country_of_birth)';
+                    $statement1 = $pdo->prepare($sql1);
+                    $statement1->bindValue('id', $this->id, PDO::PARAM_STR);
+                    $statement1->bindValue('first_name', $this->first_name, PDO::PARAM_STR);
+                    $statement1->bindValue('last_name', $this->last_name, PDO::PARAM_STR);
+                    $statement1->bindValue('birth_date', $this->birth_date, PDO::PARAM_STR);
+                    $statement1->bindValue('code_name_or_identification', $this->code_name_or_identification, PDO::PARAM_STR);
+                    $statement1->bindValue('status', $this->status, PDO::PARAM_INT);
+                    $statement1->bindValue('type', $this->type, PDO::PARAM_INT);
+                    $statement1->bindValue('country_of_birth', $this->country_of_birth, PDO::PARAM_INT);
+
+                    if ($statement1->execute()){
+                        echo '
+                <div class="alert alert-success mt-4" role="alert">
+                  L\'agent de terrain a été créé avec succès!
+                </div>';
+                    } else {
+                        echo '
+                <div class="alert alert-danger mt-4" role="alert">
+                  Impossible de créer l\'agent de terrain !
+                </div>';
+                    }
+                }
+
+
+            echo '
+            </main>
+            </div>
+            </body>
+            </html>';
+
+            } catch (PDOException $e) {
+                echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            }
+        } else {
+            echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
         }
     }
 }

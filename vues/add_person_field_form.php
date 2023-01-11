@@ -4,7 +4,7 @@ echo '
 
   <h1 class="text-success text-center py-4 my-4">Ajouter un agent de terrain</h1>
 
-  <form id="addAdministrator" novalidate method="post" action="/controleurs/add_person_field.php">
+  <form id="addAdministrator" novalidate method="post" action="/controleurs/add_field_person.php">
 
     <div class="container pt-4">
       <div class="row">
@@ -37,39 +37,18 @@ echo '
       <div class="form-floating mt-5">
         <input type="number" class="form-control" id="floatingNumber" placeholder="Nom de code ou code d\'identification" name="codeNameOrIdentificationCode">
         <label for="floatingNumber">Nom de code ou code d\'identification</label>
-      </div>
-      <div class="form-floating mt-5">
-        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="status">';
+      </div>';
 
-        for ($status=1; $status <= $nbFieldPersonStatus; $status++) {
-            echo '<option value="'.$fieldPersonStatus->getId().'">'.$fieldPersonStatus->getName().'</option>';
-        }
+        $fieldPersonStatusObject = new FieldPersonStatus();
+        $fieldPersonStatusObject->displaySelectStatusOptions();
 
-        echo '
-        </select>
-        <label for="floatingSelect">Types</label>
-      </div>
-      <div class="form-floating mt-5">
-        <select class="form-select" id="floatingSelect1" aria-label="Floating label select example" name="type">';
+        $fieldPersonTypesObject = new FieldPersonType();
+        $fieldPersonTypesObject->displaySelectTypesOptions();
 
-        for ($type=1; $type <= $nbFieldPersonTypes; $type++) {
-            echo '<option value="'.$fieldPersonType->getId().'">'.$fieldPersonType->getName().'</option>';
-        }
+        $countryObject = new Country();
+        $countryObject->displayCountriesDatalist();
 
-echo'   </select>
-        <label for="floatingSelect">Types</label>
-      </div>
-      <div class="form-floating mt-5">
-        <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Type to search..." name="placeOfBirth">
-        <datalist id="datalistOptions">
-          <option value="San Francisco">
-          <option value="New York">
-          <option value="Seattle">
-          <option value="Los Angeles">
-          <option value="Chicago">
-        </datalist>
-        <label for="floatingDataList">Datalist example</label>
-      </div>
+echo' 
       <div class="mt-4 text-center">
         <button class="btn btn-success btn-lg" type="submit">Ajouter</button>
       </div>

@@ -38,4 +38,32 @@ class FieldPersonStatus
     }
 
 
+    public function displaySelectStatusOptions (): void
+    {
+
+        echo '
+                <div class="form-floating mt-5">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="status">
+                ';
+
+        try {
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $sql5 = 'SELECT * FROM field_persons_status ORDER BY name ASC';
+            $statement5 = $pdo->prepare($sql5);
+            if ($statement5->execute()) {
+                while ($fieldPersonStatus = $statement5->fetchObject('FieldPersonStatus')) {
+                        echo '<option value="' . $fieldPersonStatus->getId() . '">' . $fieldPersonStatus->getName() . '</option>';
+                }
+            }
+        }  catch (PDOException $e) {
+        echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+
+        echo '
+                </select>
+                <label for="floatingSelect">Status</label>
+              </div>
+                ';
+
+    }
 }

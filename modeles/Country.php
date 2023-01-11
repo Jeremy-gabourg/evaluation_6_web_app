@@ -333,4 +333,34 @@ class Country
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
     }
+
+    public function displayCountriesDatalist (): void
+    {
+
+        echo '
+                <div class="form-floating mt-5">
+                    <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Taper pour rechercher..." name="placeOfBirth">
+                    <datalist id="datalistOptions">
+                ';
+
+        try {
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $sql6 = 'SELECT * FROM countries ORDER BY french_name ASC';
+            $statement6 = $pdo->prepare($sql6);
+            if ($statement6->execute()) {
+                while ($country = $statement6->fetchObject('Country')) {
+                    echo '<option value="' . $country->getFrenchName() . '">';
+                }
+            }
+        }  catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+
+        echo '
+                </datalist>
+                <label for="floatingDataList">Pays de naissance</label>
+              </div>
+                ';
+
+    }
 }

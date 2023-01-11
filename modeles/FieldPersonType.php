@@ -37,5 +37,32 @@ class FieldPersonType
         $this->name = $name;
     }
 
+    public function displaySelectTypesOptions (): void
+    {
+        try {
+
+            echo '
+                <div class="form-floating mt-5">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="types">
+                ';
+
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $sql2 = 'SELECT * FROM field_persons_types ORDER BY name ASC';
+            $statement2 = $pdo->prepare($sql2);
+            if ($statement2->execute()) {
+                while ($fieldPersonTypes = $statement2->fetchObject('FieldPersonStatus')) {
+                    echo '<option value="' . $fieldPersonTypes->getId() . '">' . $fieldPersonTypes->getName() . '</option>';
+                }
+            }
+            echo '
+                </select>
+                <label for="floatingSelect">Types</label>
+              </div>
+                ';
+
+        }  catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
 
 }
