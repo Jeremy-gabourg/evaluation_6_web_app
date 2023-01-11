@@ -44,7 +44,7 @@ class FieldPerson
      */
     public function setFirstName(string $first_name): void
     {
-        $this->first_name = strtolower(ucfirst($first_name));
+        $this->first_name = ucfirst(strtolower($first_name));
     }
 
     /**
@@ -60,7 +60,7 @@ class FieldPerson
      */
     public function setLastName(string $last_name): void
     {
-        $this->last_name = strtolower(strtoupper($last_name));
+        $this->last_name = strtoupper(strtolower($last_name));
     }
 
     /**
@@ -309,7 +309,7 @@ class FieldPerson
         }
     }
 
-    public function removeFieldPerson(int $fieldPersonId): void
+    public function removeFieldPerson(string $fieldPersonId): void
     {
         try {
 
@@ -318,7 +318,7 @@ class FieldPerson
             $sql2='DELETE FROM field_persons WHERE id = :id';
             $statement = $pdo->prepare($sql2);
 
-            $statement->bindParam('id', $fieldPersonId, PDO::PARAM_INT);
+            $statement->bindParam('id', $fieldPersonId, PDO::PARAM_STR);
 
             if ($statement->execute()) {
                 echo '<div class="alert alert-success">L\'agent de terrain a été supprimé correctement de la base de données</div>';
@@ -398,23 +398,25 @@ class FieldPerson
 
                     if ($statement1->execute()){
                         echo '
+                <main class="col">
                 <div class="alert alert-success mt-4" role="alert">
                   L\'agent de terrain a été créé avec succès!
-                </div>';
+                </div>
+                </main>
+                </body>
+                </html>
+                ';
                     } else {
                         echo '
+                <main class="col">
                 <div class="alert alert-danger mt-4" role="alert">
                   Impossible de créer l\'agent de terrain !
-                </div>';
+                </main>
+                </div>
+                </body>
+                </html>';
                     }
                 }
-
-
-            echo '
-            </main>
-            </div>
-            </body>
-            </html>';
 
             } catch (PDOException $e) {
                 echo 'Une erreur s\'est produite lors de la communication avec la base de données';

@@ -10,7 +10,6 @@ if(isset($_SESSION['connected'])){
         $fieldPersonObject->displayForm();
     } else {
         $fieldPersonObject->addFieldPerson();
-        $fieldPersonObject->displayForm();
     }
 } else {
     header('Location: /index.php');
