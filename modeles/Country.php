@@ -337,12 +337,6 @@ class Country
     public function displayCountriesDatalist (): void
     {
 
-        echo '
-                <div class="form-floating mt-5">
-                    <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Taper pour rechercher..." name="placeOfBirth">
-                    <datalist id="datalistOptions">
-                ';
-
         try {
             include (__DIR__.'/../controleurs/bdd_connexion.php');
             $sql6 = 'SELECT * FROM countries ORDER BY french_name ASC';

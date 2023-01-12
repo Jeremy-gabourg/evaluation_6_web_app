@@ -41,18 +41,11 @@ class FieldPersonType
     {
         try {
 
-            echo '
-                <div class="form-floating mt-5">
-                <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
-                    <option selected>Choisissez un type</option>
-
-                ';
-
             include (__DIR__.'/../controleurs/bdd_connexion.php');
             $sql2 = 'SELECT * FROM field_persons_types ORDER BY name ASC';
             $statement2 = $pdo->prepare($sql2);
             if ($statement2->execute()) {
-                while ($fieldPersonTypes = $statement2->fetchObject('FieldPersontypes')) {
+                while ($fieldPersonTypes = $statement2->fetchObject('FieldPersonType')) {
                     echo '<option value="' . $fieldPersonTypes->getId() . '">' . $fieldPersonTypes->getName() . '</option>';
                 }
             }

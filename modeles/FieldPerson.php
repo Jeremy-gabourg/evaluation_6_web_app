@@ -332,13 +332,14 @@ class FieldPerson
         }
     }
 
-    public function displayForm() {
+    public function displayForm(): void
+    {
         try {
             require_once (__DIR__.'/FieldPersonStatus.php');
             require_once (__DIR__.'/FieldPersonType.php');
             require_once (__DIR__.'/Country.php');
 
-            require_once (__DIR__ . '/../vues/add_person_field_form.php');
+            require_once (__DIR__ . '/../vues/add_field_person_form.php');
             echo '</main>
                   </body>
                   </html>';
@@ -423,6 +424,82 @@ class FieldPerson
             }
         } else {
             echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
+        }
+    }
+
+    public function displaySelectedFieldPerson(int $fieldPersonId): void
+    {
+        try {
+            $sql = 'SELECT * FROM field_persons WHERE id=:id';
+
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $statement=$pdo->prepare($sql);
+            $statement->bindParam('id', $fieldPersonId, PDO::PARAM_INT);
+
+            if($statement->execute()) {
+                while ($fieldPersonObject = $statement->fetchObject('FieldPerson')) {
+                    require_once (__DIR__.'/../vues/back_template.html');
+                    require_once (__DIR__ . '/../vues/modify_field_person_form.php');
+                    $_SESSION['fieldPersonId'] = $fieldPersonId;
+                }
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
+    public function modifyFieldPerson($fieldPersonId): void
+    {
+        try {
+            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+            require_once (__DIR__.'/Country.php');
+
+            $sql = 'SELECT * FROM countries WHERE french_name=:french_name';
+            $statement = $pdo->prepare($sql);
+            $statement->bindValue('french_name', $_POST['placeOfBirth'], PDO::PARAM_STR);
+
+            if($statement->execute()) {
+                $placeOfBirth = $statement->fetchObject('Country');
+                $this->setCountryOfBirth($placeOfBirth->getId());
+
+                $this->setId($fieldPersonId);
+                $this->setFirstName($_POST['firstName']);
+                $this->setLastName($_POST['lastName']);
+                $this->setBirthDate($_POST['birthDate']);
+                $this->setCodeNameOrIdentification($_POST['codeNameOrIdentificationCode']);
+                $this->setStatus($_POST['status']);
+                $this->setType($_POST['types']);
+
+                $sql = 'UPDATE countries SET first_name=:first_name, last_name=:last_name, birth_date=:birth_date, code_name_or_code_identification=:code_name_or_code_identification, status=:status, type=:type, country_of_birth=:country_of_birth WHERE id=:id';
+                $statement = $pdo->prepare($sql);
+                $statement->bindValue('first_name', $this->first_name, PDO::PARAM_STR);
+                $statement->bindValue('last_name', $this->last_name, PDO::PARAM_STR);
+                $statement->bindValue('birth_date', $this->birth_date, PDO::PARAM_STR);
+                $statement->bindValue('code_name_or_code_identification', $this->code_name_or_identification, PDO::PARAM_STR);
+                $statement->bindValue('status', $this->status, PDO::PARAM_INT);
+                $statement->bindValue('type', $this->type, PDO::PARAM_INT);
+                $statement->bindValue('country_of_birth', $this->country_of_birth, PDO::PARAM_INT);
+                $statement->bindValue('id', $this->id, PDO::PARAM_INT);
+
+                if ($statement->execute()) {
+                    $fieldPersonObject = $this;
+                    require_once(__DIR__ . '/../vues/modify_country_form.php');
+                    echo '<div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
+                } else {
+                    echo '<div class="alert alert-danger mt-4">Problème lors de l\'enregistrement des données</div>';
+                }
+            }
+                echo '
+                    </main>
+                    </body>
+                    </html>';
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
     }
 }

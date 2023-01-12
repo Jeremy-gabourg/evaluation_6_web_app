@@ -4,7 +4,7 @@ echo'
 
     <h1 class="text-success text-center py-4 my-4">Modifier un pays</h1>
 
-    <form id="addAdministrator" novalidate method="post" action="/controleurs/modify_country.php">
+    <form id="modifyCountry" novalidate method="post" action="/controleurs/modify_country.php">
 
         <div class="container pt-4">
             <div class="form-floating mb-3 mt-4">

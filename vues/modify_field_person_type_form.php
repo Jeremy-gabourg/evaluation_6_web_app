@@ -2,9 +2,9 @@
 echo '
 <main class="text-success col">
 
-    <h1 class="text-success text-center py-4 my-4">Ajouter un Type</h1>
+    <h1 class="text-success text-center py-4 my-4">Modifier un Type</h1>
 
-    <form id="addAdministrator" novalidate method="post" action="/controleurs/modify_field_person_type.php">
+    <form id="modifyFieldPersonType" novalidate method="post" action="/controleurs/modify_field_person_type.php">
 
         <div class="container pt-4">
             <div class="form-floating mb-3 mt-4">
@@ -16,7 +16,7 @@ echo '
             </div>
 
             <div class="mt-4 text-center">
-                <button class="btn btn-success btn-lg" type="submit">Ajouter</button>
+                <button class="btn btn-success btn-lg" type="submit">Enregistrer les modifications</button>
             </div>
         </div>
 

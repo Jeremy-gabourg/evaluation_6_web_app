@@ -4,7 +4,7 @@ echo '
 
   <h1 class="text-success text-center py-4 my-4">Ajouter un agent de terrain</h1>
 
-  <form id="addAdministrator" novalidate method="post" action="/controleurs/add_field_person.php">
+  <form id="addFieldPerson" novalidate method="post" action="/controleurs/add_field_person.php">
 
     <div class="container pt-4">
       <div class="row">
@@ -35,16 +35,29 @@ echo '
         </div>
       </div>
       <div class="form-floating mt-5">
-        <input type="number" class="form-control" id="floatingNumber" placeholder="Nom de code ou code d\'identification" name="codeNameOrIdentificationCode">
-        <label for="floatingNumber">Nom de code ou code d\'identification</label>
-      </div>';
-
+        <input type="text" class="form-control" id="floatingInput3" placeholder="Nom de code ou code d\'identification" name="codeNameOrIdentificationCode">
+        <label for="floatingInput3">Nom de code ou code d\'identification</label>
+      </div>
+      <div class="form-floating mt-5">
+        <select class="form-select" id="floatingSelect1" aria-label="Floating label select example" name="status">
+           <option selected>Choisissez un statut</option>
+      ';
         $fieldPersonStatusObject = new FieldPersonStatus();
         $fieldPersonStatusObject->displaySelectStatusOptions();
 
+        echo '
+        <div class="form-floating mt-5">
+            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
+                <option selected>Choisissez un type</option>
+        ';
         $fieldPersonTypesObject = new FieldPersonType();
         $fieldPersonTypesObject->displaySelectTypesOptions();
 
+        echo '
+        <div class="form-floating mt-5">
+            <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Taper pour rechercher..." name="placeOfBirth">
+            <datalist id="datalistOptions">
+        ';
         $countryObject = new Country();
         $countryObject->displayCountriesDatalist();
 
