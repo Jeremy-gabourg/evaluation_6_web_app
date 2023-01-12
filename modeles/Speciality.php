@@ -143,4 +143,98 @@ class Speciality
         }
     }
 
+    public function addSpeciality(): void
+    {
+        if ($_POST['name']!=="") {
+
+            try {
+
+                $this->setName($_POST['name']);
+
+                require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+
+                $sql = 'INSERT INTO specialities(name) VALUES (:name)';
+                $statement = $pdo->prepare($sql);
+                $statement->bindParam('name', $this->name, PDO::PARAM_STR);
+
+                if ($statement->execute()){
+                    echo '
+                <div class="alert alert-success mt-4" role="alert">
+                  La spécialité a été créé avec succès!
+                </div>';
+                } else {
+                    echo '
+                <div class="alert alert-danger mt-4" role="alert">
+                  Impossible de créer la spécialité !
+                </div>';
+                }
+
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+
+            } catch (PDOException $e) {
+                echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            }
+        } else {
+            echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
+        }
+    }
+
+    public function modifySpeciality($specialityId): void
+    {
+        try {
+            require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+
+            $this->setId($specialityId);
+            $this->setName($_POST['name']);
+
+            $sql='UPDATE specialities SET name=:name WHERE id=:id';
+            $statement = $pdo->prepare($sql);
+            $statement->bindValue('name', $this->name, PDO::PARAM_STR);
+            $statement->bindValue('id', $this->id, PDO::PARAM_INT);
+
+            if($statement->execute()){
+                $speciality=$this;
+                require_once (__DIR__.'/../vues/modify_speciality_form.php');
+                echo '<div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
+            } else {
+                echo '<div class="alert alert-danger mt-4">Problème lors de l\'enregistrement des données</div>';
+            }
+            echo '
+                </main>
+                </body>
+                </html>';
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
+    public function displaySelectedSpeciality(int $specialityId): void
+    {
+        try {
+            $sql = 'SELECT * FROM specialities WHERE id=:id';
+
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $statement=$pdo->prepare($sql);
+            $statement->bindParam('id', $specialityId, PDO::PARAM_INT);
+            if($statement->execute()) {
+                while ($speciality = $statement->fetchObject('Speciality')) {
+                    require_once (__DIR__.'/../vues/back_template.html');
+                    require_once (__DIR__ . '/../vues/modify_speciality_form.php');
+                    $_SESSION['specialityId'] = $specialityId;
+                }
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
 }
