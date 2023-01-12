@@ -227,13 +227,15 @@ class FieldPerson
                                                 <td>' . $status->getName() . '</td>
                                                 <td>' . $type->getName() . '</td>
                                                 <td class="text-end">
-                                                    <form method="post">
+                                                    <form method="post" action="/controleurs/modify_field_person.php" class="d-inline-block">
                                                         <button type="submit" class="btn btn-warning" name="modifybutton" value="'.$fieldPerson->getId().'">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                                             </svg>                                                            
                                                             <span class="d-none d-md-inline ps-1">Modifier</span>                                              
                                                         </button>
+                                                    </form>
+                                                    <fom method="post" class="d-inline-block">
                                                         <button type="submit" class="btn btn-danger" name="suppressionbutton" value="' . $fieldPerson->getId() . '">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
@@ -242,7 +244,8 @@ class FieldPerson
                                                         </button>
                                                     </form>
                                                 </td>
-                                    </tr>
+                                    </tr>                    
+
                                         ';
                         }
                     }
@@ -427,20 +430,45 @@ class FieldPerson
         }
     }
 
-    public function displaySelectedFieldPerson(int $fieldPersonId): void
+    public function displaySelectedFieldPerson(string $fieldPersonId): void
     {
+        require_once (__DIR__.'/FieldPersonStatus.php');
+        require_once (__DIR__.'/FieldPersonType.php');
+        require_once (__DIR__.'/Country.php');
+
         try {
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
             $sql = 'SELECT * FROM field_persons WHERE id=:id';
 
-            include (__DIR__.'/../controleurs/bdd_connexion.php');
             $statement=$pdo->prepare($sql);
-            $statement->bindParam('id', $fieldPersonId, PDO::PARAM_INT);
+            $statement->bindValue('id', $fieldPersonId, PDO::PARAM_STR);
 
             if($statement->execute()) {
                 while ($fieldPersonObject = $statement->fetchObject('FieldPerson')) {
-                    require_once (__DIR__.'/../vues/back_template.html');
-                    require_once (__DIR__ . '/../vues/modify_field_person_form.php');
-                    $_SESSION['fieldPersonId'] = $fieldPersonId;
+                    $sql1 = 'SELECT * FROM field_persons_status WHERE id=:id';
+                    $statement1 = $pdo->prepare($sql1);
+                    $statement1->bindValue('id', $fieldPersonObject->getStatus(), PDO::PARAM_INT);
+
+                    if($statement1->execute()) {
+                        $status = $statement1->fetchObject('FieldPersonStatus');
+                        $sql2 = 'SELECT * FROM field_persons_types WHERE id=:id';
+                        $statement2 = $pdo->prepare($sql2);
+                        $statement2->bindValue('id', $fieldPersonObject->getType(), PDO::PARAM_INT);
+
+                        if ($statement2->execute()) {
+                            $type = $statement2->fetchObject('FieldPersonType');
+                            $sql3 = 'SELECT * FROM countries WHERE id=:id';
+                            $statement3 = $pdo->prepare($sql3);
+                            $statement3->bindValue('id', $fieldPersonObject->getCountryOfBirth(), PDO::PARAM_INT);
+
+                            if ($statement3->execute()) {
+                                $country = $statement3->fetchObject('Country');
+                                require_once (__DIR__.'/../vues/back_template.html');
+                                include (__DIR__ . '/../vues/modify_field_person_form.php');
+                                $_SESSION['fieldPersonId'] = $fieldPersonId;
+                            }
+                        }
+                    }
                 }
                 echo '
                 </main>
@@ -453,7 +481,7 @@ class FieldPerson
         }
     }
 
-    public function modifyFieldPerson($fieldPersonId): void
+    public function modifyFieldPerson(string $fieldPersonId): void
     {
         try {
             require_once (__DIR__.'/../controleurs/bdd_connexion.php');
@@ -473,25 +501,23 @@ class FieldPerson
                 $this->setBirthDate($_POST['birthDate']);
                 $this->setCodeNameOrIdentification($_POST['codeNameOrIdentificationCode']);
                 $this->setStatus($_POST['status']);
-                $this->setType($_POST['types']);
+                $this->setType($_POST['type']);
 
-                $sql = 'UPDATE countries SET first_name=:first_name, last_name=:last_name, birth_date=:birth_date, code_name_or_code_identification=:code_name_or_code_identification, status=:status, type=:type, country_of_birth=:country_of_birth WHERE id=:id';
+                $sql = 'UPDATE field_persons SET first_name=:first_name, last_name=:last_name, birth_date=:birth_date, code_name_or_identification=:code_name_or_identification, status=:status, type=:type, country_of_birth=:country_of_birth WHERE id=:id';
                 $statement = $pdo->prepare($sql);
                 $statement->bindValue('first_name', $this->first_name, PDO::PARAM_STR);
                 $statement->bindValue('last_name', $this->last_name, PDO::PARAM_STR);
                 $statement->bindValue('birth_date', $this->birth_date, PDO::PARAM_STR);
-                $statement->bindValue('code_name_or_code_identification', $this->code_name_or_identification, PDO::PARAM_STR);
+                $statement->bindValue('code_name_or_identification', $this->code_name_or_identification, PDO::PARAM_STR);
                 $statement->bindValue('status', $this->status, PDO::PARAM_INT);
                 $statement->bindValue('type', $this->type, PDO::PARAM_INT);
                 $statement->bindValue('country_of_birth', $this->country_of_birth, PDO::PARAM_INT);
-                $statement->bindValue('id', $this->id, PDO::PARAM_INT);
+                $statement->bindValue('id', $this->id, PDO::PARAM_STR);
 
                 if ($statement->execute()) {
-                    $fieldPersonObject = $this;
-                    require_once(__DIR__ . '/../vues/modify_country_form.php');
-                    echo '<div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
+                    echo '<main class="col"><div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
                 } else {
-                    echo '<div class="alert alert-danger mt-4">Problème lors de l\'enregistrement des données</div>';
+                    echo '<main class="col"><div class="alert alert-danger mt-4">Problème lors de l\'enregistrement des données</div>';
                 }
             }
                 echo '

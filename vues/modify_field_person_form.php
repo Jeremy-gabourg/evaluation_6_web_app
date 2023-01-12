@@ -40,22 +40,22 @@ echo '
       </div>
       <div class="form-floating mt-5">
         <select class="form-select" id="floatingSelect1" aria-label="Floating label select example" name="status">
-            <option selected>'.$fieldPersonObject->getStatus().'</option>
+            <option selected value="'.$fieldPersonObject->getStatus().'">'.$status->getName().'</option>
       ';
         $fieldPersonStatusObject = new FieldPersonStatus();
         $fieldPersonStatusObject->displaySelectStatusOptions();
 
 echo '
         <div class="form-floating mt-5">
-            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
-                <option selected>'.$fieldPersonObject->getType().'</option>
+            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="type">
+                <option selected value="'.$fieldPersonObject->getType().'">'.$type->getName().'</option>
         ';
         $fieldPersonTypesObject = new FieldPersonType();
         $fieldPersonTypesObject->displaySelectTypesOptions();
 
 echo '
         <div class="form-floating mt-5">
-            <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Taper pour rechercher..." name="placeOfBirth" value="'.$fieldPersonObject->getCountryOfBirth.'">
+            <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Taper pour rechercher..." name="placeOfBirth" value="'.$country->getFrenchName().'">
             <datalist id="datalistOptions">
         ';
         $countryObject = new Country();
