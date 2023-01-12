@@ -8,7 +8,7 @@ if(isset($_SESSION['connected'])){
         $fieldPersonStatusObject = new FieldPersonStatus();
         $fieldPersonStatusId = $_POST['modifybutton'];
         $fieldPersonStatusObject->displaySelectedStatus($fieldPersonStatusId);
-    }  elseif (isset($_SESSION['name'])) {
+    }  elseif (isset($_SESSION['statusId'])) {
         require_once (__DIR__.'/../modeles/FieldPersonStatus.php');
         $fieldPersonStatusObject = new FieldPersonStatus();
         $fieldPersonStatusId = $_SESSION['statusId'];

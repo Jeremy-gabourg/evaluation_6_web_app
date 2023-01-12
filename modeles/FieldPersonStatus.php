@@ -226,19 +226,19 @@ class FieldPersonStatus
         }
     }
 
-    public function displaySelectedStatus(int $statusId): void
+    public function displaySelectedStatus(int $fieldPersonStatusId): void
     {
         try {
             $sql = 'SELECT * FROM field_persons_status WHERE id=:id';
 
             include (__DIR__.'/../controleurs/bdd_connexion.php');
             $statement=$pdo->prepare($sql);
-            $statement->bindParam('id', $statusId, PDO::PARAM_INT);
+            $statement->bindParam('id', $fieldPersonStatusId, PDO::PARAM_INT);
             if($statement->execute()) {
-                while ($country = $statement->fetchObject('FieldPersonStatus')) {
+                while ($status = $statement->fetchObject('FieldPersonStatus')) {
                     require_once (__DIR__.'/../vues/back_template.html');
                     require_once (__DIR__ . '/../vues/modify_field_person_status_form.php');
-                    $_SESSION['statusId'] = $statusId;
+                    $_SESSION['statusId'] = $fieldPersonStatusId;
                 }
                 echo '
                 </main>
