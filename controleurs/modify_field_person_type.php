@@ -7,16 +7,22 @@ if(isset($_SESSION['connected'])){
         require_once (__DIR__.'/../modeles/FieldPersonType.php');
         $fieldPersonTypeObject = new FieldPersonType();
         $fieldPersonTypeId = $_POST['modifybutton'];
-        $fieldPersonTypeObject->displaySelectedTypes($fieldPersonTypeId);
-    }  elseif (isset($_SESSION['name'])) {
+        $fieldPersonTypeObject->displaySelectedType($fieldPersonTypeId);
+    }  elseif (isset($_SESSION['typeId'])) {
         require_once (__DIR__.'/../modeles/FieldPersonType.php');
         $fieldPersonTypeObject = new FieldPersonType();
         $fieldPersonTypeId = $_SESSION['typeId'];
         require_once (__DIR__.'/../vues/back_template.html');
-        $fieldPersonTypeObject->modifyTypes($fieldPersonTypeId);
+        $fieldPersonTypeObject->modifyType($fieldPersonTypeId);
     } else {
         require_once (__DIR__.'/../vues/back_template.html');
-        echo '<div class="alert alert-danger">Erreur d\'affichage</div>';
+        echo '
+            <main class="col">
+            <div class="alert alert-danger">Erreur d\'affichage</div>
+            </main>
+            </body>
+            </html>                
+                ';
     }
 } else {
     header('Location: /index.php');
