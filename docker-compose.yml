@@ -1,0 +1,19 @@
+version:
+  "3.9"
+services:
+  php_apache:
+    build: './build/php'
+    volumes :
+      - ./:/var/www/html/
+    ports:
+      - 80:80
+  mysql:
+    volumes:
+      - ./db_data:/var/lib/mysql
+    build: './build/mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD : ""
+      MYSQL_DATABASE : "international_spy_agency"
+      MYSQL_ALLOW_EMPTY_PASSWORD : true
+    ports:
+      - 3306:3306
