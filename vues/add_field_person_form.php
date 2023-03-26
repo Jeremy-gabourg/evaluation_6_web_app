@@ -1,9 +1,12 @@
 <?php
+$_ENV['title'] = '  <h1 class="text-success text-center py-4 my-4">Ajouter un agent de terrain</h1>';
+
 echo '
-<main class="text-success col">
+<main class="text-success col">';
 
-  <h1 class="text-success text-center py-4 my-4">Ajouter un agent de terrain</h1>
+    echo $_ENV['title'];
 
+echo '
   <form id="addFieldPerson" novalidate method="post" action="/controleurs/add_field_person.php">
 
     <div class="container pt-4">
@@ -55,7 +58,7 @@ echo '
 
         echo '
         <div class="form-floating mt-5">
-            <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Taper pour rechercher..." name="placeOfBirth">
+            <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Pays de naissance" name="placeOfBirth">
             <datalist id="datalistOptions">
         ';
         $countryObject = new Country();

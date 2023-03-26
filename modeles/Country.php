@@ -336,7 +336,6 @@ class Country
 
     public function displayCountriesDatalist (): void
     {
-
         try {
             include (__DIR__.'/../controleurs/bdd_connexion.php');
             $sql6 = 'SELECT * FROM countries ORDER BY french_name ASC';
@@ -349,12 +348,19 @@ class Country
         }  catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
         }
-
-        echo '
+        $check = 'terrain';
+        if(strpos($_ENV['title'], $check) !== false) {
+            echo '
                 </datalist>
                 <label for="floatingDataList">Pays de naissance</label>
+              </div>        
+                ';
+        } else {
+            echo '
+                </datalist>
+                <label for="floatingDataList">Pays d\'implantation</label>
               </div>
                 ';
-
+        }
     }
 }

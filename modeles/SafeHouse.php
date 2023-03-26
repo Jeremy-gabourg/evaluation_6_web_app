@@ -205,7 +205,7 @@ class SafeHouse
                                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                     </svg>
-                                    <span class="ps-1">Ajouter un pays</span>
+                                    <span class="ps-1">Ajouter une planque</span>
                                 </a>
                             </div>';
                 if($nbSafeHouses>$nbParPage){
@@ -258,6 +258,54 @@ class SafeHouse
             }
         } catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
+    public function addSafeHouse() : void
+    {
+        if ($_POST['frenchName']!=="" && $_POST['englishName']!=="" && $_POST['countryCode']!=="" && $_POST['alphaCode2']!=="" && $_POST['alphaCode3']!=="") {
+
+            try {
+
+                $this->setFrenchName($_POST['frenchName']);
+                $this->setEnglishName($_POST['englishName']);
+                $this->setCountryCode($_POST['countryCode']);
+                $this->setAlpha2Code($_POST['alphaCode2']);
+                $this->setAlpha3Code($_POST['alphaCode3']);
+
+                require_once (__DIR__.'/../controleurs/bdd_connexion.php');
+
+                $sql = 'INSERT INTO countries(french_name, english_name, country_code, alpha2_code, alpha3_code) VALUES (:french_name, :english_name, :country_code, :alpha2_code, :alpha3_code)';
+                $statement = $pdo->prepare($sql);
+                $statement->bindParam('french_name', $this->french_name, PDO::PARAM_STR);
+                $statement->bindParam('english_name', $this->english_name, PDO::PARAM_STR);
+                $statement->bindParam('country_code', $this->country_code, PDO::PARAM_INT);
+                $statement->bindParam('alpha2_code', $this->alpha2_code, PDO::PARAM_STR);
+                $statement->bindParam('alpha3_code', $this->alpha3_code, PDO::PARAM_STR);
+
+                if ($statement->execute()){
+                    echo '
+                <div class="alert alert-success mt-4" role="alert">
+                  La planque a été créé avec succès!
+                </div>';
+                } else {
+                    echo '
+                <div class="alert alert-danger mt-4" role="alert">
+                  Impossible de créer la planque !
+                </div>';
+                }
+
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+
+            } catch (PDOException $e) {
+                echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            }
+        } else {
+            echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
         }
     }
 }
