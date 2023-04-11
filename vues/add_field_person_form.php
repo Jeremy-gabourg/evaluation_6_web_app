@@ -1,12 +1,13 @@
 <?php
 $_ENV['title'] = '  <h1 class="text-success text-center py-4 my-4">Ajouter un agent de terrain</h1>';
+?>
 
-echo '
-<main class="text-success col">';
+<main class="text-success col">
 
-    echo $_ENV['title'];
+<?php
+echo $_ENV['title'];
+?>
 
-echo '
   <form id="addFieldPerson" novalidate method="post" action="/controleurs/add_field_person.php">
 
     <div class="container pt-4">
@@ -44,31 +45,33 @@ echo '
       <div class="form-floating mt-5">
         <select class="form-select" id="floatingSelect1" aria-label="Floating label select example" name="status">
            <option selected>Choisissez un statut</option>
-      ';
+
+<?php
         $fieldPersonStatusObject = new FieldPersonStatus();
         $fieldPersonStatusObject->displaySelectStatusOptions();
+?>
 
-        echo '
         <div class="form-floating mt-5">
             <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
                 <option selected>Choisissez un type</option>
-        ';
+
+<?php
         $fieldPersonTypesObject = new FieldPersonType();
         $fieldPersonTypesObject->displaySelectTypesOptions();
+?>
 
-        echo '
         <div class="form-floating mt-5">
             <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Pays de naissance" name="placeOfBirth">
             <datalist id="datalistOptions">
-        ';
+
+<?php
         $countryObject = new Country();
         $countryObject->displayCountriesDatalist();
+?>
 
-echo' 
       <div class="mt-4 text-center">
         <button class="btn btn-success btn-lg" type="submit">Ajouter</button>
       </div>
     </div>
 
   </form>
-';
