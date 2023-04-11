@@ -230,7 +230,7 @@ class FieldPersonType
                 while ($type = $statement->fetchObject('FieldPersonType')) {
                     require_once (__DIR__.'/../vues/back_template.html');
                     require_once (__DIR__ . '/../vues/modify_field_person_type_form.php');
-                    $_SESSION['typeId'] = $fieldPersonTypeId;
+                    $_SESSION['fieldPersontypeId'] = $fieldPersonTypeId;
                 }
                 echo '
                 </main>

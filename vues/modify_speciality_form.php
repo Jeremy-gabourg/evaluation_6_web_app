@@ -6,7 +6,7 @@
 
     <div class="container pt-4">
       <div class="form-floating mb-3 mt-4">
-        <input type="text" class="form-control" id="floatingInput1" placeholder="Nom" name="name" value="<?php $speciality->getName() ?>">
+        <input type="text" class="form-control" id="floatingInput1" placeholder="Nom" name="name" value="<?php echo $speciality->getName() ?>">
         <label for="floatingInput1">Nom</label>
         <div class="invalid-feedback">
           Merci de rentrer un nom svp

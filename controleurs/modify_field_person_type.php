@@ -8,10 +8,10 @@ if(isset($_SESSION['connected'])){
         $fieldPersonTypeObject = new FieldPersonType();
         $fieldPersonTypeId = $_POST['modifybutton'];
         $fieldPersonTypeObject->displaySelectedType($fieldPersonTypeId);
-    }  elseif (isset($_SESSION['typeId'])) {
+    }  elseif (isset($_SESSION['fieldPersontypeId'])) {
         require_once (__DIR__.'/../modeles/FieldPersonType.php');
         $fieldPersonTypeObject = new FieldPersonType();
-        $fieldPersonTypeId = $_SESSION['typeId'];
+        $fieldPersonTypeId = $_SESSION['fieldPersontypeId'];
         require_once (__DIR__.'/../vues/back_template.html');
         $fieldPersonTypeObject->modifyType($fieldPersonTypeId);
     } else {

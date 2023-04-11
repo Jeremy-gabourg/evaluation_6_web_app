@@ -10,9 +10,9 @@ if(isset($_SESSION['connected'])){
 
     if (isset($_POST['suppressionbutton'])){
         $typeId=$_POST['suppressionbutton'];
-        $fieldPersonTypesObject->removeFieldPersontypes($typeId);
+        $fieldPersonTypesObject->removeFieldPersonTypes($typeId);
     }
-    $fieldPersonTypesObject->displayPersontypesList();
+    $fieldPersonTypesObject->displayPersonTypesList();
 } else {
     header('Location: /index.php');
 }

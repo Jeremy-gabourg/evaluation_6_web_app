@@ -2,7 +2,7 @@
 
     <h1 class="text-success text-center py-4 my-4">Modifier un Type</h1>
 
-    <form id="modifyFieldPersonType" novalidate method="post" action="/controleurs/modify_field_person_type.php">
+    <form id="modifyFieldPersonType" novalidate method="post" action="/controleurs/modify_safe_house_type.php">
 
         <div class="container pt-4">
             <div class="form-floating mb-3 mt-4">
