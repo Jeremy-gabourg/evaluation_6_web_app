@@ -1,0 +1,21 @@
+<main class="text-success col">
+
+  <h1 class="text-success text-center py-4 my-4">Ajouter un Statut pour les missions</h1>
+
+  <form id="addFieldPersonStatus" novalidate method="post" action="/controleurs/add_mission_status.php">
+
+    <div class="container pt-4">
+      <div class="form-floating mb-3 mt-4">
+        <input type="text" class="form-control" id="floatingInput1" placeholder="Nom" name="name">
+        <label for="floatingInput1">Nom</label>
+        <div class="invalid-feedback">
+          Merci de rentrer un nom svp
+        </div>
+      </div>
+
+      <div class="mt-4 text-center">
+        <button class="btn btn-success btn-lg" type="submit">Ajouter</button>
+      </div>
+    </div>
+
+  </form>

@@ -1,7 +1,7 @@
 <?php
 
 $host = "localhost";
-$dbname = "international_spy_agency";
+$dbname = "kgb_db";
 $charset = "utf8";
 $port="3306";
 

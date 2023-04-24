@@ -152,11 +152,11 @@ class SafeHouseType
                     echo '
                         <nav aria-label="Page navigation mt-4 bg-dark">
                           <ul class="pagination justify-content-center mt-4">
-                             <li class="page-item ';if($currentpage == 1){echo'disabled';} else{"";};echo'"><a class="page-link" href="field_person_types_listing.php/?page='.($currentpage-1).'">Precédente</a></li>';
+                             <li class="page-item ';if($currentpage == 1){echo'disabled';} else{"";};echo'"><a class="page-link" href="safe_house_type_listing.php/?page='.($currentpage-1).'">Precédente</a></li>';
                     for($page=1;$page<=$nbPages;$page++){
-                        echo'<li class="page-item ';if($currentpage==$page){echo'active';}else{"";};echo'"><a class="page-link" href="field_person_types_listing.php/?page='.$page.'">'.$page.'</a></li>';
+                        echo'<li class="page-item ';if($currentpage==$page){echo'active';}else{"";};echo'"><a class="page-link" href="safe_house_type_listing.php/?page='.$page.'">'.$page.'</a></li>';
                     }
-                    echo'<li class="page-item ';if($currentpage == $nbPages){echo'disabled';}else{"";};echo'"><a class="page-link" href="field_person_types_listing.php/?page='.($currentpage+1).'">Suivante</a></li>
+                    echo'<li class="page-item ';if($currentpage == $nbPages){echo'disabled';}else{"";};echo'"><a class="page-link" href="safe_house_type_listing.php/?page='.($currentpage+1).'">Suivante</a></li>
                           </ul>
                         </nav>
                         </main>
