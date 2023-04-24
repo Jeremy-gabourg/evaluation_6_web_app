@@ -2,7 +2,7 @@ version: "3.9"
 services:
   php-apache:
     ports:
-      - "80:80"
+      - "8080:80"
     build: '.'
     volumes:
       - ./:/var/www/html
