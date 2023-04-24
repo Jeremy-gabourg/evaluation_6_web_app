@@ -4,19 +4,10 @@ html, body {
 }
 
 header {
-    max-height: 20vh;
+    max-height: 10vh;
 }
 main {
-    min-height: calc(100vh - 20vh);
-}
-
-.front-footer {
-    display: block;
-    background: #1A2B33;
-}
-
-.footer-image {
-    margin: 0 auto;
+    min-height: calc(100vh - 10vh);
 }
 
 .back-navbar {
