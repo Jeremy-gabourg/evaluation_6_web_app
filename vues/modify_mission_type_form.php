@@ -1,8 +1,8 @@
 <main class="text-success col">
 
-    <h1 class="text-success text-center py-4 my-4">Modifier un type de planque</h1>
+    <h1 class="text-success text-center py-4 my-4">Modifier un Type de mission</h1>
 
-    <form id="modifySafeHouseType" novalidate method="post" action="/controleurs/modify_safe_house_type.php">
+    <form id="modifyMissionType" novalidate method="post" action="/controleurs/modify_field_person_type.php">
 
         <div class="container pt-4">
             <div class="form-floating mb-3 mt-4">

@@ -173,7 +173,7 @@ class SafeHouse
 
                             echo'
                                                 <td class="text-end">
-                                                    <form method="post" action="/controleurs/modify_country.php" class="d-inline-block">
+                                                    <form method="post" action="/controleurs/modify_safe_house.php" class="d-inline-block">
                                                         <button type="submit" class="btn btn-warning" name="modifybutton" value="'.$safeHouse->getId().'">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
@@ -263,27 +263,34 @@ class SafeHouse
 
     public function addSafeHouse() : void
     {
-        if ($_POST['frenchName']!=="" && $_POST['englishName']!=="" && $_POST['countryCode']!=="" && $_POST['alphaCode2']!=="" && $_POST['alphaCode3']!=="") {
+        if ($_POST['address']!=="" && $_POST['country']!=="" && $_POST['types']!=="") {
 
             try {
+                
+                require (__DIR__.'/../controleurs/bdd_connexion.php');
 
-                $this->setFrenchName($_POST['frenchName']);
-                $this->setEnglishName($_POST['englishName']);
-                $this->setCountryCode($_POST['countryCode']);
-                $this->setAlpha2Code($_POST['alphaCode2']);
-                $this->setAlpha3Code($_POST['alphaCode3']);
-
-                require_once (__DIR__.'/../controleurs/bdd_connexion.php');
-
-                $sql = 'INSERT INTO countries(french_name, english_name, country_code, alpha2_code, alpha3_code) VALUES (:french_name, :english_name, :country_code, :alpha2_code, :alpha3_code)';
+                $sql = 'SELECT * FROM countries WHERE french_name = :french_name';
                 $statement = $pdo->prepare($sql);
-                $statement->bindParam('french_name', $this->french_name, PDO::PARAM_STR);
-                $statement->bindParam('english_name', $this->english_name, PDO::PARAM_STR);
-                $statement->bindParam('country_code', $this->country_code, PDO::PARAM_INT);
-                $statement->bindParam('alpha2_code', $this->alpha2_code, PDO::PARAM_STR);
-                $statement->bindParam('alpha3_code', $this->alpha3_code, PDO::PARAM_STR);
+                $statement->bindParam('french_name', $_POST['country'], PDO::PARAM_STR);
+                if ($statement->execute()) {
+                    while ($country = $statement->fetchObject('Country')) {
+                        $countryId = $country->getId();
+                    }}
+    
+                
+                $this->setAddress($_POST['address']);
+                $this->setCountry($countryId);
+                $this->setType($_POST['types']);
+                $this->setIsAvailable(1);
 
-                if ($statement->execute()){
+                $sql2 = 'INSERT INTO safe_houses(address, type, is_available, country) VALUES (:address, :type, :is_available, :country)';
+                $statement2 = $pdo->prepare($sql2);
+                $statement2->bindParam('address', $this->address, PDO::PARAM_STR);
+                $statement2->bindParam('type', $this->type, PDO::PARAM_STR);
+                $statement2->bindParam('is_available', $this->is_available, PDO::PARAM_INT);
+                $statement2->bindParam('country', $this->country, PDO::PARAM_INT);
+
+                if ($statement2->execute()){
                     echo '
                 <div class="alert alert-success mt-4" role="alert">
                   La planque a été créé avec succès!
@@ -307,5 +314,10 @@ class SafeHouse
         } else {
             echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
         }
+    }
+
+    public function displaySelectedSafeHouse($safeHouseId)
+    {
+
     }
 }

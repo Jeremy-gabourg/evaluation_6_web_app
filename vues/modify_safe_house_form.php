@@ -1,5 +1,5 @@
 <?php
-$_ENV['title'] = '<h1 class="text-success text-center py-4 my-4">Ajouter une planque</h1>';
+$_ENV['title'] = '<h1 class="text-success text-center py-4 my-4">Modifier une planque</h1>';
 ?>
 
 <main class="text-success col">
@@ -8,13 +8,13 @@ $_ENV['title'] = '<h1 class="text-success text-center py-4 my-4">Ajouter une pla
 echo $_ENV['title'];
 ?>
 
-  <form id="addSafeHouse" novalidate method="post" action="/controleurs/add_safe_house.php">
+  <form id="addSafeHouse" novalidate method="post" action="/controleurs/modify_safe_house.php">
 
     <div class="container pt-4">
       <div class="row">
         <div class="col-12 col-md">
           <div class="form-floating mt-4">
-            <input type="text" class="form-control" id="floatingInput1" placeholder="Adresse" name="address">
+            <input type="text" class="form-control" id="floatingInput1" placeholder="Adresse" name="address" value="<?php echo $this->getAddress() ?>">
             <label for="floatingInput1">Adresse</label>
             <div class="invalid-feedback">
               Merci de rentrer une adresse svp

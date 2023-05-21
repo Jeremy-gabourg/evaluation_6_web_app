@@ -1,6 +1,6 @@
 <main class="text-success col">
 
-  <h1 class="text-success text-center py-4 my-4">Modifier un Statut</h1>
+  <h1 class="text-success text-center py-4 my-4">Modifier un statut de personnel de terrain</h1>
 
   <form id="modifyFieldPersonStatus" novalidate method="post" action="/controleurs/modify_field_person_status.php">
 

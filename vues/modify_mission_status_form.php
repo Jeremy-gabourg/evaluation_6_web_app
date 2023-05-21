@@ -1,8 +1,8 @@
 <main class="text-success col">
 
-  <h1 class="text-success text-center py-4 my-4">Modifier un Statut</h1>
+  <h1 class="text-success text-center py-4 my-4">Modifier un statut de mission</h1>
 
-  <form id="modifyFieldPersonStatus" novalidate method="post" action="/controleurs/modify_mission_status.php">
+  <form id="modifyMissionStatus" novalidate method="post" action="/controleurs/modify_mission_status.php">
 
     <div class="container pt-4">
       <div class="form-floating mb-3 mt-4">

@@ -2,7 +2,7 @@
 
   <h1 class="text-success text-center py-4 my-4">Modifier un agent de terrain</h1>
 
-  <form id="addFieldPerson" novalidate method="post" action="/controleurs/modify_field_person.php">
+  <form id="modifyFieldPerson" novalidate method="post" action="/controleurs/modify_field_person.php">
 
     <div class="container pt-4">
       <div class="row">
