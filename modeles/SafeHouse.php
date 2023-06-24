@@ -318,6 +318,26 @@ class SafeHouse
 
     public function displaySelectedSafeHouse($safeHouseId)
     {
+        try {
+            $sql = 'SELECT * FROM safe_houses WHERE id=:id';
 
+            include (__DIR__.'/../controleurs/bdd_connexion.php');
+            $statement=$pdo->prepare($sql);
+            $statement->bindParam('id', $safeHouseId, PDO::PARAM_INT);
+            if($statement->execute()) {
+                while ($type = $statement->fetchObject('SafeHouse')) {
+                    require_once (__DIR__.'/../vues/back_template.html');
+                    require_once (__DIR__ . '/../vues/modify_safe_house_form.php');
+                    $_SESSION['safeHouseId'] = $safeHouseId;
+                }
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+            }
+        } catch (PDOException $e) {
+            echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
     }
 }

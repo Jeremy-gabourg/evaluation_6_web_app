@@ -8,13 +8,13 @@ $_ENV['title'] = '<h1 class="text-success text-center py-4 my-4">Modifier une pl
 echo $_ENV['title'];
 ?>
 
-  <form id="addSafeHouse" novalidate method="post" action="/controleurs/modify_safe_house.php">
+  <form id="modifySafeHouse" novalidate method="post" action="/controleurs/modify_safe_house.php">
 
     <div class="container pt-4">
       <div class="row">
         <div class="col-12 col-md">
           <div class="form-floating mt-4">
-            <input type="text" class="form-control" id="floatingInput1" placeholder="Adresse" name="address" value="<?php echo $this->getAddress() ?>">
+            <input type="text" class="form-control" id="floatingInput1" placeholder="Adresse" name="address" value="<?php echo $type->getAddress() ?>">
             <label for="floatingInput1">Adresse</label>
             <div class="invalid-feedback">
               Merci de rentrer une adresse svp
@@ -32,8 +32,8 @@ $countryObject->displayCountriesDatalist();
 
     </div>
       <div class="form-floating mt-5">
-            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
-                <option selected>Choisissez un type</option>
+            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types" value="<?php echo $type->getName() ?>">
+                <option selected><?php echo $this->getType() ?></option>
 
 <?php
 $safeHouseTypesObject = new safeHouseType();
@@ -41,6 +41,6 @@ $safeHouseTypesObject->displaySelectTypesOptions();
 ?>
 
         <div class="mt-4 text-center">
-        <button class="btn btn-success btn-lg" type="submit">Ajouter</button>
+        <button class="btn btn-success btn-lg" type="submit">Modifier</button>
       </div>
   </form>

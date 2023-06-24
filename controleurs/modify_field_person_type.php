@@ -8,7 +8,7 @@ if(isset($_SESSION['connected'])){
         $fieldPersonTypeObject = new FieldPersonType();
         $fieldPersonTypeId = $_POST['modifybutton'];
         $fieldPersonTypeObject->displaySelectedType($fieldPersonTypeId);
-    }  elseif (isset($_SESSION['fieldPersontypeId'])) {
+    }  elseif (isset($_SESSION['fieldPersonTypeId'])) {
         require_once (__DIR__.'/../modeles/FieldPersonType.php');
         $fieldPersonTypeObject = new FieldPersonType();
         $fieldPersonTypeId = $_SESSION['fieldPersonTypeId'];
