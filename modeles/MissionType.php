@@ -234,7 +234,7 @@ class MissionType
             $statement->bindValue('id', $this->id, PDO::PARAM_INT);
 
             if($statement->execute()){
-                $this = $missionType;
+                
                 require_once (__DIR__.'/../vues/modify_mission_type_form.php');
                 echo '<div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
             } else {

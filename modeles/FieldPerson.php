@@ -463,6 +463,7 @@ class FieldPerson
 
                             if ($statement3->execute()) {
                                 $country = $statement3->fetchObject('Country');
+                                
                                 require_once (__DIR__.'/../vues/back_template.html');
                                 include (__DIR__ . '/../vues/modify_field_person_form.php');
                                 $_SESSION['fieldPersonId'] = $fieldPersonId;

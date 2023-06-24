@@ -11,7 +11,7 @@ if(isset($_SESSION['connected'])){
     }  elseif (isset($_SESSION['missionTypeId'])) {
         require_once (__DIR__.'/../modeles/MissionType.php');
         $missionTypeObject = new MissionType();
-        // $missionTypeId = $_SESSION['missionTypeId'];
+        $missionTypeId = $_SESSION['missionTypeId'];
         require_once (__DIR__.'/../vues/back_template.html');
         $missionTypeObject->modifyType($missionTypeId);
     } else {

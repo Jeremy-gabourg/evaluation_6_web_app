@@ -318,6 +318,7 @@ class SafeHouse
 
     public function displaySelectedSafeHouse($safeHouseId)
     {
+
         try {
             $sql = 'SELECT * FROM safe_houses WHERE id=:id';
 
@@ -325,10 +326,26 @@ class SafeHouse
             $statement=$pdo->prepare($sql);
             $statement->bindParam('id', $safeHouseId, PDO::PARAM_INT);
             if($statement->execute()) {
-                while ($type = $statement->fetchObject('SafeHouse')) {
-                    require_once (__DIR__.'/../vues/back_template.html');
-                    require_once (__DIR__ . '/../vues/modify_safe_house_form.php');
-                    $_SESSION['safeHouseId'] = $safeHouseId;
+                while ($safeHouse = $statement->fetchObject('SafeHouse')) {
+
+                    $sql2 = 'SELECT * FROM countries WHERE id=:id';
+                    $statement2 = $pdo->prepare($sql2);
+                    $statement2->bindValue('id', $safeHouse->getCountry(), PDO::PARAM_INT);
+                    if ($statement2->execute()) {
+                        $country = $statement2->fetchObject('Country');
+
+                        $sql3 = 'SELECT * FROM safe_houses_types WHERE id=:id';
+                        $statement3 = $pdo->prepare($sql3);
+                        $statement3->bindValue('id', $safeHouse->getType(), PDO::PARAM_STR);
+                        if ($statement3->execute()) {
+                            $safeHouseType = $statement3->fetchObject('SafeHouseType');
+
+                            require_once (__DIR__.'/../vues/back_template.html');
+                            require_once (__DIR__ . '/../vues/modify_safe_house_form.php');
+                            $_SESSION['safeHouseId'] = $safeHouseId;
+                        }
+                    }
+
                 }
                 echo '
                 </main>
@@ -338,6 +355,60 @@ class SafeHouse
             }
         } catch (PDOException $e) {
             echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+        }
+    }
+
+    public function modifySafeHouse($safeHouseId) : void
+    {
+        if ($_POST['address']!=="" && $_POST['country']!=="" && $_POST['type']!=="") {
+
+            try {
+                
+                require (__DIR__.'/../controleurs/bdd_connexion.php');
+
+                $sql = 'SELECT * FROM countries WHERE french_name = :french_name';
+                $statement = $pdo->prepare($sql);
+                $statement->bindParam('french_name', $_POST['country'], PDO::PARAM_STR);
+                if ($statement->execute()) {
+                    while ($country = $statement->fetchObject('Country')) {
+                        $countryId = $country->getId();
+                    }}
+    
+                
+                $this->setAddress($_POST['address']);
+                $this->setCountry($countryId);
+                $this->setType($_POST['type']);
+
+                $sql2 = 'UPDATE safe_houses SET address=:address, type=:type, country=:country WHERE id=:id';
+                $statement2 = $pdo->prepare($sql2);
+                $statement2->bindParam('address', $this->address, PDO::PARAM_STR);
+                $statement2->bindParam('type', $this->type, PDO::PARAM_STR);
+                $statement2->bindParam('country', $this->country, PDO::PARAM_INT);
+                $statement2->bindParam('id', $safeHouseId, PDO::PARAM_INT);
+
+                if ($statement2->execute()){
+                        echo '
+                    <div class="alert alert-success mt-4" role="alert">
+                    La planque a été modifiée avec succès!
+                    </div>';
+                    } else {
+                        echo '
+                    <div class="alert alert-danger mt-4" role="alert">
+                    Impossible de modifier la planque !
+                    </div>';
+                }
+
+                echo '
+                </main>
+                </div>
+                </body>
+                </html>';
+
+            } catch (PDOException $e) {
+                echo 'Une erreur s\'est produite lors de la communication avec la base de données';
+            }
+        } else {
+            echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
         }
     }
 }

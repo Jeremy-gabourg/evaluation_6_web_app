@@ -257,7 +257,7 @@ class FieldPersonType
             $statement->bindValue('id', $this->id, PDO::PARAM_INT);
 
             if($statement->execute()){
-                $type=$this;
+                $fieldPersonType=$this;
                 require_once (__DIR__.'/../vues/modify_field_person_type_form.php');
                 echo '<div class="alert alert-success mt-4">Les modifications ont bien été enregistrées</div>';
             } else {

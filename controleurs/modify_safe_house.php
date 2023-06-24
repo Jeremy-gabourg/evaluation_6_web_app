@@ -3,6 +3,9 @@ session_start();
 
 if(isset($_SESSION['connected'])){
 
+    require_once (__DIR__.'/../modeles/Country.php');
+    require_once (__DIR__.'/../modeles/SafeHouseType.php');
+
     if(isset($_POST['modifybutton'])){
         require_once (__DIR__.'/../modeles/SafeHouse.php');
         $safeHouseObject = new SafeHouse();
@@ -13,7 +16,7 @@ if(isset($_SESSION['connected'])){
         $safeHouseObject = new SafeHouse();
         $safeHouseId = $_SESSION['safeHouseId'];
         require_once (__DIR__.'/../vues/back_template.html');
-        $countryObject->modifySafeHouse($safeHouseId);
+        $safeHouseObject->modifySafeHouse($safeHouseId);
     } else {
         require_once (__DIR__.'/../vues/back_template.html');
         echo '<div class="alert alert-danger">Erreur d\'affichage</div>';
