@@ -15,6 +15,18 @@ services:
       MYSQL_DATABASE: "kgb_db"
     volumes:
       - dbData:/var/lib/mysql
+  phpmya:
+    ports: 
+      - 8899:80
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: "super-secret-password"
+      UPLOAD_LIMIT: 20M
+    
 volumes:
   app:
   dbData:

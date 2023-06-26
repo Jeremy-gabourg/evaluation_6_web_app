@@ -360,10 +360,9 @@ class SafeHouse
 
     public function modifySafeHouse($safeHouseId) : void
     {
-        if ($_POST['address']!=="" && $_POST['country']!=="" && $_POST['type']!=="") {
-
-            try {
-                
+        
+        try {
+            
                 require (__DIR__.'/../controleurs/bdd_connexion.php');
 
                 $sql = 'SELECT * FROM countries WHERE french_name = :french_name';
@@ -371,44 +370,37 @@ class SafeHouse
                 $statement->bindParam('french_name', $_POST['country'], PDO::PARAM_STR);
                 if ($statement->execute()) {
                     while ($country = $statement->fetchObject('Country')) {
-                        $countryId = $country->getId();
+                        $newCountry = $country->getId();
                     }}
+
+                    $sql3 = 'UPDATE safe_houses SET address=:address, type=:type, country=:country WHERE safe_houses.id=:id';
+                    $statement3 = $pdo->prepare($sql3);
+                    $statement3->bindValue('address', $_POST['address'], PDO::PARAM_STR);
+                    $statement3->bindValue('type', $_POST['type'], PDO::PARAM_INT);
+                    $statement3->bindValue('country', $newCountry, PDO::PARAM_INT);
+                    $statement3->bindValue('id', $safeHouseId, PDO::PARAM_INT);
+
+                    if ($statement3->execute()){
+                            echo '
+                                <main class="col"><div class="alert alert-success mt-4" role="alert">
+                                La planque a été modifiée avec succès!
+                                </div>';
+                        } else {
+                            echo '
+                                <main class="col"><div class="alert alert-danger mt-4" role="alert">
+                                Impossible de modifier la planque !
+                                </div>';
+                    }
     
-                
-                $this->setAddress($_POST['address']);
-                $this->setCountry($countryId);
-                $this->setType($_POST['type']);
+                    echo '
+                        </main>
+                        </div>
+                        </body>
+                        </html>';
 
-                $sql2 = 'UPDATE safe_houses SET address=:address, type=:type, country=:country WHERE id=:id';
-                $statement2 = $pdo->prepare($sql2);
-                $statement2->bindParam('address', $this->address, PDO::PARAM_STR);
-                $statement2->bindParam('type', $this->type, PDO::PARAM_STR);
-                $statement2->bindParam('country', $this->country, PDO::PARAM_INT);
-                $statement2->bindParam('id', $safeHouseId, PDO::PARAM_INT);
-
-                if ($statement2->execute()){
-                        echo '
-                    <div class="alert alert-success mt-4" role="alert">
-                    La planque a été modifiée avec succès!
-                    </div>';
-                    } else {
-                        echo '
-                    <div class="alert alert-danger mt-4" role="alert">
-                    Impossible de modifier la planque !
-                    </div>';
-                }
-
-                echo '
-                </main>
-                </div>
-                </body>
-                </html>';
 
             } catch (PDOException $e) {
                 echo 'Une erreur s\'est produite lors de la communication avec la base de données';
             }
-        } else {
-            echo '<div class="alert alert-danger mt-4">Merci de ne laisser aucun champs vide</div>';
-        }
     }
 }
