@@ -32,8 +32,8 @@ $countryObject->displayCountriesDatalist();
 
     </div>
       <div class="form-floating mt-5">
-            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="type" value="<?php echo $safeHouseType->getId() ?>">
-                <option selected><?php echo $safeHouseType->getName() ?></option>
+            <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="type">
+                <option selected value="<?php echo $safeHouseType->getId() ?>"><?php echo $safeHouseType->getName() ?></option>
 
 <?php
 $safeHouseTypesObject = new safeHouseType();
