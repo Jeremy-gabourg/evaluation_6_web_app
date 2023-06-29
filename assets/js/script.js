@@ -1,87 +1,114 @@
-(() => {
-    'use strict'
+let addingSpecialitiesButton = document.getElementById(add_speciality)
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    let form = document.getElementById('addAdministrator');
+var i=4
 
-    form.addEventListener('submit', function(event)
-    {
+function addSpeciality() {
 
-        Array.from(form.elements).forEach((input) => {
-            if (input.type !== 'submit') {
-                if (!validateFields(input)) {
-                    event.preventDefault();
-                    event.stopPropagation();
+let div = document.createElement('div.')
+div.setAttribute("class", "form-floating mt-5")
+div.innerHTML('<select class="form-select" id="floatingSelect' + 
++ i +'" aria-label="Floating label select example" name="specialities">'
++'<option selected>Choisissez une spécialité</option><?php $specialitiesObject = new Speciality(); $specialitiesObject->displaySelectSpecialitiesOptions(); ?>'
++'</select>')
 
-                    input.classList.remove("is-valid");
-                    input.classList.add("is-invalid");
-                    input.nextElementSibling.style.display = 'block';
-                } else {
-                    input.nextElementSibling.style.display = 'none';
-                    input.classList.remove("is-invalid");
-                    input.classList.add("is-valid");
-                }
-            }
-        });
-    }, false)
-})()
-
-function validateRequired(input) {
-    return !(input.value == null || input.value == "");
+i++
+      
 }
 
-function validateLength (input, minLength, maxLength) {
-    return !(input.value.length < minLength || input.value.length > maxLength);
-}
 
-function validateText(input) {
-    return input.value.match("^[A-Za-z]+$");
-}
+{/* <div class="form-floating mt-5">
+            <select class="form-select" id="floatingSelect3" aria-label="Floating label select example" name="specialities">
+                <option selected>Choisissez un type</option>
 
-function validateEmail(input) {
-    let EMAIL = input.value;
-    let ATEXIST = EMAIL.indexOf("@");
-    let DOTEXIST = EMAIL.lastIndexOf(".");
+<?php
+        $specialitiesObject = new Speciality();
+        $specialitiesObject->displaySelectSpecialitiesOptions();
+?></select> */}
 
-    return !(ATEXIST<1 || (DOTEXIST-ATEXIST < 2));
-}
+// (() => {
+//     'use strict'
 
-function validateFields(input) {
-    let fieldName = input.name;
+//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+//     let form = document.getElementById('addAdministrator');
 
-    if(fieldName == "firstName") {
-        if(!validateRequired(input)) {
-            return false;
-        }
-        if(!validateLength(input, 2, 20)) {
-            return false;
-        }
-        if(!validateText(input)) {
-            return false
-        }
-        return (true);
-    }
+//     form.addEventListener('submit', function(event)
+//     {
 
-    if(fieldName == "lastName") {
-        if(!validateRequired(input)) {
-            return false;
-        }
-        if(!validateLength(input, 2, 20)) {
-            return false;
-        }
-        if(!validateText(input)) {
-            return false
-        }
-        return (true);
-    }
+//         Array.from(form.elements).forEach((input) => {
+//             if (input.type !== 'submit') {
+//                 if (!validateFields(input)) {
+//                     event.preventDefault();
+//                     event.stopPropagation();
 
-    if(fieldName == "email") {
-        if(!validateRequired(input)) {
-            return false;
-        }
-        if(!validateEmail(input)) {
-            return false
-        }
-        return (true);
-    }
-}
+//                     input.classList.remove("is-valid");
+//                     input.classList.add("is-invalid");
+//                     input.nextElementSibling.style.display = 'block';
+//                 } else {
+//                     input.nextElementSibling.style.display = 'none';
+//                     input.classList.remove("is-invalid");
+//                     input.classList.add("is-valid");
+//                 }
+//             }
+//         });
+//     }, false)
+// })()
+
+// function validateRequired(input) {
+//     return !(input.value == null || input.value == "");
+// }
+
+// function validateLength (input, minLength, maxLength) {
+//     return !(input.value.length < minLength || input.value.length > maxLength);
+// }
+
+// function validateText(input) {
+//     return input.value.match("^[A-Za-z]+$");
+// }
+
+// function validateEmail(input) {
+//     let EMAIL = input.value;
+//     let ATEXIST = EMAIL.indexOf("@");
+//     let DOTEXIST = EMAIL.lastIndexOf(".");
+
+//     return !(ATEXIST<1 || (DOTEXIST-ATEXIST < 2));
+// }
+
+// function validateFields(input) {
+//     let fieldName = input.name;
+
+//     if(fieldName == "firstName") {
+//         if(!validateRequired(input)) {
+//             return false;
+//         }
+//         if(!validateLength(input, 2, 20)) {
+//             return false;
+//         }
+//         if(!validateText(input)) {
+//             return false
+//         }
+//         return (true);
+//     }
+
+//     if(fieldName == "lastName") {
+//         if(!validateRequired(input)) {
+//             return false;
+//         }
+//         if(!validateLength(input, 2, 20)) {
+//             return false;
+//         }
+//         if(!validateText(input)) {
+//             return false
+//         }
+//         return (true);
+//     }
+
+//     if(fieldName == "email") {
+//         if(!validateRequired(input)) {
+//             return false;
+//         }
+//         if(!validateEmail(input)) {
+//             return false
+//         }
+//         return (true);
+//     }
+// }
