@@ -1,12 +1,20 @@
 <?php
 
-// Dockerfile local
-$host = "mysql";
+// XAMPP local 
+$host = "localhost";
 $dbname = "kgb_db";
 $charset = "utf8";
 $port="3306";
 $username = 'root';
-$password = 'super-secret-password';
+$password = '';
+
+// Dockerfile local
+// $host = "mysql";
+// $dbname = "kgb_db";
+// $charset = "utf8";
+// $port="3306";
+// $username = 'root';
+// $password = 'super-secret-password';
 
 // Serveur Planet Hoster
 // $host = "localhost";

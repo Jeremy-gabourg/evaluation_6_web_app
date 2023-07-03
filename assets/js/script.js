@@ -1,19 +1,25 @@
-let addingSpecialitiesButton = document.getElementById(add_speciality)
+
+window.addEventListener("DOMContentLoaded", (event) => {
+        var addingSpecialitiesButton = document.getElementById('add_speciality')
+        var parentDiv = document.getElementById('speciality_parent')
+
+        function addSpeciality() {
+                
+                let buttonDiv = document.createElement('div')
+                buttonDiv.setAttribute("class", "form-floating mt-5")
+                buttonDiv.innerHTML='<select class="form-select" id="floatingSelect' + i +'" aria-label="Floating label select example" name="specialities"><option selected>Choisissez une spécialité</option><?php $specialitiesObject = new Speciality(); $specialitiesObject->displaySelectSpecialitiesOptions(); ?></select>'
+                parentDiv.prepend(buttonDiv)
+                
+                i++
+        }
+
+        if (addingSpecialitiesButton) {
+                addingSpecialitiesButton.addEventListener('click', addSpeciality)
+        }
+    });
 
 var i=4
 
-function addSpeciality() {
-
-let div = document.createElement('div.')
-div.setAttribute("class", "form-floating mt-5")
-div.innerHTML('<select class="form-select" id="floatingSelect' + 
-+ i +'" aria-label="Floating label select example" name="specialities">'
-+'<option selected>Choisissez une spécialité</option><?php $specialitiesObject = new Speciality(); $specialitiesObject->displaySelectSpecialitiesOptions(); ?>'
-+'</select>')
-
-i++
-      
-}
 
 
 {/* <div class="form-floating mt-5">

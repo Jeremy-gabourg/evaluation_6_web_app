@@ -46,38 +46,40 @@ echo $_ENV['title'];
         <select class="form-select" id="floatingSelect1" aria-label="Floating label select example" name="status">
            <option selected>Choisissez un statut</option>
 
-<?php
-        $fieldPersonStatusObject = new FieldPersonStatus();
-        $fieldPersonStatusObject->displaySelectStatusOptions();
-?>
+          <?php
+                  $fieldPersonStatusObject = new FieldPersonStatus();
+                  $fieldPersonStatusObject->displaySelectStatusOptions();
+          ?>
 
         <div class="form-floating mt-5">
             <select class="form-select" id="floatingSelect2" aria-label="Floating label select example" name="types">
                 <option selected>Choisissez un type</option>
 
-<?php
-        $fieldPersonTypesObject = new FieldPersonType();
-        $fieldPersonTypesObject->displaySelectTypesOptions();
-?>
+          <?php
+                  $fieldPersonTypesObject = new FieldPersonType();
+                  $fieldPersonTypesObject->displaySelectTypesOptions();
+          ?>
 
         <div class="form-floating mt-5">
             <input class="form-control" list="datalistOptions" id="floatingDataList" placeholder="Pays de naissance" name="placeOfBirth">
             <datalist id="datalistOptions">
 
-<?php
-        $countryObject = new Country();
-        $countryObject->displayCountriesDatalist();
-?>
+          <?php
+                  $countryObject = new Country();
+                  $countryObject->displayCountriesDatalist();
+          ?>
 
-    <div class="mt-4 text-center">
-        <button class="btn btn-secondary" id="add_speciality">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-              <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>
-            <span class="ps-1">Ajouter une spécialité</span>
-        </button>
-      </div>
+        <div id="speciality_parent">
+          <div class="mt-4 text-center" id="add_speciality">
+            <a type="button" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                <span class="ps-1">Ajouter une spécialité</span>
+            </a>
+          </div>
+        </div>
     </div>
 
       <div class="my-5 text-center">
